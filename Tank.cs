@@ -22,12 +22,14 @@ namespace ElementalTanks
         public PictureBox ShootEffect { get; }
         public int Health { get; set; }
         public int MoveSpeed { get; private set; }
-        public string Direction { get; set; }
 
-        public Point Location { get; set; }
+        public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public Image Sprite { get; set; }
+
+        public readonly Dictionary<string, RotateFlipType> Rotations;
+        public readonly Dictionary<string, (int, int)> MovementForDirection;
 
         public Tank()
         {
@@ -38,7 +40,6 @@ namespace ElementalTanks
             Y = 300;
             Sprite = Properties.Resources.tank1;
            
-            
             Element = ElementType.Fire;
             //ShootEffect = new PictureBox
             //{
@@ -47,6 +48,33 @@ namespace ElementalTanks
             //    Location = new Point(Sprite.Left, Sprite.Top - Sprite.Height)
             //};
 
+            Rotations = new Dictionary<string, RotateFlipType>
+            {
+                ["Up"] = RotateFlipType.RotateNoneFlipNone,
+                ["Down"] = RotateFlipType.RotateNoneFlipY,
+                ["Left"] = RotateFlipType.Rotate90FlipX,
+                ["Right"] = RotateFlipType.Rotate90FlipNone
+            };
+
+            MovementForDirection = new Dictionary<string, (int, int)>
+            {
+                ["Up"] = (0, -MoveSpeed),
+                ["Down"] = (0, MoveSpeed),
+                ["Left"] = (-MoveSpeed, 0),
+                ["Right"] = (MoveSpeed, 0)
+            };
+        }
+
+        public bool IsInBounds(Form form)
+        {
+            return Direction switch
+            {
+                "Left" => X > 1,
+                "Up" => Y > 1,
+                "Right" => X + Sprite.Width < form.ClientSize.Width - 1,
+                "Down" => Y + Sprite.Height < form.ClientSize.Height,
+                _ => true,
+            };
         }
     }
 }
