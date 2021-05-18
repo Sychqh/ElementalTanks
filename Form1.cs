@@ -16,17 +16,18 @@ namespace ElementalTanks
         private readonly List<Tank> enemies;
         private int score;
         private Timer gameTimer;
-        private bool rotated;
         private bool goLeft, goRight, goUp, goDown;
 
         public Form1()
         {
             InitializeComponent();
+            player = new Tank();
+            enemies = new List<Tank>();
 
             gameTimer = new Timer
             {
                 Enabled = true,
-                Interval = 20,
+                Interval = 20
             };
             gameTimer.Tick += MainTimerEvent;
             gameTimer.Start();
@@ -34,9 +35,24 @@ namespace ElementalTanks
             KeyDown += KeyIsDown;
             KeyUp += KeyIsUp;
             Controls.Add(player.Sprite);
+           
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
+        {
+            UpdatePlayerRotation();
+
+            if (goLeft && player.Sprite.Left > 1)
+                player.Sprite.Left -= player.MoveSpeed;
+            if (goRight && player.Sprite.Left + player.Sprite.Width < ClientSize.Width)
+                player.Sprite.Left += player.MoveSpeed;
+            if (goUp && player.Sprite.Top > 1)
+                player.Sprite.Top -= player.MoveSpeed;
+            if (goDown && player.Sprite.Top + player.Sprite.Height < ClientSize.Height)
+                player.Sprite.Top += player.MoveSpeed;
+        }
+
+        private void UpdatePlayerRotation()
         {
             switch (player.Direction)
             {
@@ -56,15 +72,6 @@ namespace ElementalTanks
                     player.Sprite.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
             }
-
-            if (goLeft)
-                player.Sprite.Left -= player.MoveSpeed;
-            if (goRight)
-                player.Sprite.Left += player.MoveSpeed;
-            if (goUp)
-                player.Sprite.Top -= player.MoveSpeed;
-            if (goDown)
-                player.Sprite.Top += player.MoveSpeed;
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -72,16 +79,19 @@ namespace ElementalTanks
             switch (e.KeyCode)
             {
                 case Keys.Left:
+                case Keys.A:
                     goLeft = false;
                     break;
                 case Keys.Right:
+                case Keys.D:
                     goRight = false;
-                    rotated = true;
                     break;
                 case Keys.Down:
+                case Keys.S:
                     goDown = false;
                     break;
                 case Keys.Up:
+                case Keys.W:
                     goUp = false;
                     break;
             }
@@ -92,22 +102,39 @@ namespace ElementalTanks
             switch (e.KeyCode)
             {
                 case Keys.Left:
+                case Keys.A:
                     goLeft = true;
                     player.Direction = "Left";
                     break;
+
                 case Keys.Right:
+                case Keys.D:
                     goRight = true;
                     player.Direction = "Right";
                     break;
+
                 case Keys.Down:
+                case Keys.S:
                     goDown = true; 
                     player.Direction = "Down";
                     break;
+
                 case Keys.Up:
+                case Keys.W:
                     goUp = true; 
                     player.Direction = "Up";
                     break;
+
+                case Keys.Space:
+                    Shoot();
+                    break;
             }
+        }
+
+        private void Shoot()
+        {
+            var shootEffect = player.ShootEffect;
+            Controls.Add(shootEffect);
         }
     }
 }

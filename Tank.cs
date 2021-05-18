@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    public enum Element
+    public enum ElementType
     {
         Fire,
         Water,
@@ -18,25 +18,33 @@ namespace ElementalTanks
 
     class Tank
     {
-        public Element Element { get; }
-        public int Health { get; private set; }
+        public ElementType Element { get; }
+        public PictureBox ShootEffect { get; }
+        public int Health { get; set; }
         public int MoveSpeed { get; private set; }
         public string Direction { get; set; }
-        public PictureBox Sprite { get; private set; }
-        public Image spr { get; }
+        public PictureBox Sprite { get; }
+
         public Tank()
         {
             Sprite = new PictureBox
             {
                 Image = Properties.Resources.tank1,
                 SizeMode = PictureBoxSizeMode.AutoSize,
-                Location = new Point(516, 130)
+                Location = new Point(300, 300)
             };
 
+            Health = 100;
             MoveSpeed = 20;
             Direction = "Up";
-            //Sprite.
-            //Sprite.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+            Element = ElementType.Fire;
+            ShootEffect = new PictureBox
+            {
+                Image = Properties.Resources.fire1,
+                SizeMode = PictureBoxSizeMode.AutoSize,
+                Location = new Point(Sprite.Left, Sprite.Top - Sprite.Height)
+            };
         }
     }
 }
