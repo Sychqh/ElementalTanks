@@ -23,28 +23,30 @@ namespace ElementalTanks
         public int Health { get; set; }
         public int MoveSpeed { get; private set; }
         public string Direction { get; set; }
-        public PictureBox Sprite { get; }
+
+        public Point Location { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Image Sprite { get; set; }
 
         public Tank()
         {
-            Sprite = new PictureBox
-            {
-                Image = Properties.Resources.tank1,
-                SizeMode = PictureBoxSizeMode.AutoSize,
-                Location = new Point(300, 300)
-            };
-
             Health = 100;
             MoveSpeed = 20;
             Direction = "Up";
-
+            X = 300;
+            Y = 300;
+            Sprite = Properties.Resources.tank1;
+           
+            
             Element = ElementType.Fire;
-            ShootEffect = new PictureBox
-            {
-                Image = Properties.Resources.fire1,
-                SizeMode = PictureBoxSizeMode.AutoSize,
-                Location = new Point(Sprite.Left, Sprite.Top - Sprite.Height)
-            };
+            //ShootEffect = new PictureBox
+            //{
+            //    Image = Properties.Resources.fire1,
+            //    SizeMode = PictureBoxSizeMode.AutoSize,
+            //    Location = new Point(Sprite.Left, Sprite.Top - Sprite.Height)
+            //};
+
         }
     }
 }

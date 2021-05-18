@@ -20,6 +20,7 @@ namespace ElementalTanks
 
         public Form1()
         {
+            DoubleBuffered = true;
             InitializeComponent();
             player = new Tank();
             enemies = new List<Tank>();
@@ -34,22 +35,26 @@ namespace ElementalTanks
 
             KeyDown += KeyIsDown;
             KeyUp += KeyIsUp;
-            Controls.Add(player.Sprite);
-           
+
+            Paint += (sender, args) =>
+            {
+                args.Graphics.DrawImage(player.Sprite, player.X, player.Y, player.Sprite.Size.Width, player.Sprite.Size.Height);
+            };
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
             UpdatePlayerRotation();
+            Invalidate();
 
-            if (goLeft && player.Sprite.Left > 1)
-                player.Sprite.Left -= player.MoveSpeed;
-            if (goRight && player.Sprite.Left + player.Sprite.Width < ClientSize.Width)
-                player.Sprite.Left += player.MoveSpeed;
-            if (goUp && player.Sprite.Top > 1)
-                player.Sprite.Top -= player.MoveSpeed;
-            if (goDown && player.Sprite.Top + player.Sprite.Height < ClientSize.Height)
-                player.Sprite.Top += player.MoveSpeed;
+            if (goLeft && player.X > 1)
+                player.X -= player.MoveSpeed;
+            if (goRight && player.X + player.Sprite.Width < ClientSize.Width)
+                player.X += player.MoveSpeed;
+            if (goUp && player.Y > 1)
+                player.Y -= player.MoveSpeed;
+            if (goDown && player.Y + player.Sprite.Height < ClientSize.Height)
+                player.Y += player.MoveSpeed;
         }
 
         private void UpdatePlayerRotation()
@@ -57,19 +62,19 @@ namespace ElementalTanks
             switch (player.Direction)
             {
                 case "Up":
-                    player.Sprite.Image = Properties.Resources.tank1;
+                    player.Sprite = Properties.Resources.tank1;
                     break;
                 case "Down":
-                    player.Sprite.Image = Properties.Resources.tank1;
-                    player.Sprite.Image.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                    player.Sprite = Properties.Resources.tank1;
+                    player.Sprite.RotateFlip(RotateFlipType.RotateNoneFlipY);
                     break;
                 case "Left":
-                    player.Sprite.Image = Properties.Resources.tank1;
-                    player.Sprite.Image.RotateFlip(RotateFlipType.Rotate90FlipX);
+                    player.Sprite = Properties.Resources.tank1;
+                    player.Sprite.RotateFlip(RotateFlipType.Rotate90FlipX);
                     break;
                 case "Right":
-                    player.Sprite.Image = Properties.Resources.tank1;
-                    player.Sprite.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    player.Sprite = Properties.Resources.tank1;
+                    player.Sprite.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
             }
         }
@@ -82,14 +87,17 @@ namespace ElementalTanks
                 case Keys.A:
                     goLeft = false;
                     break;
+
                 case Keys.Right:
                 case Keys.D:
                     goRight = false;
                     break;
+
                 case Keys.Down:
                 case Keys.S:
                     goDown = false;
                     break;
+
                 case Keys.Up:
                 case Keys.W:
                     goUp = false;
