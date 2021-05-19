@@ -26,27 +26,22 @@ namespace ElementalTanks
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public Image SourceImage { get; set; }
         public Image Sprite { get; set; }
 
         public readonly Dictionary<string, RotateFlipType> Rotations;
         public readonly Dictionary<string, (int, int)> MovementForDirection;
 
-        public Tank()
+        public Tank(Image sprite, int x, int y, ElementType element, int moveSpeed)
         {
             Health = 100;
-            MoveSpeed = 20;
+            MoveSpeed = moveSpeed;
             Direction = "Up";
-            X = 300;
-            Y = 300;
-            Sprite = Properties.Resources.tank1;
+            X = x;
+            Y = y;
+            Sprite = sprite;
            
-            Element = ElementType.Fire;
-            //ShootEffect = new PictureBox
-            //{
-            //    Image = Properties.Resources.fire1,
-            //    SizeMode = PictureBoxSizeMode.AutoSize,
-            //    Location = new Point(Sprite.Left, Sprite.Top - Sprite.Height)
-            //};
+            Element = element;
 
             Rotations = new Dictionary<string, RotateFlipType>
             {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ElementalTanks //FOR TEST
+namespace ElementalTanks
 {
     public partial class Form1 : Form
     {
@@ -16,19 +16,25 @@ namespace ElementalTanks //FOR TEST
         private readonly List<Tank> enemies;
         private int score;
         private readonly Timer gameTimer;
-        private bool isGoing = false;
+        private bool isGoing;
 
         public Form1()
         {
             DoubleBuffered = true;
             InitializeComponent();
-            player = new Tank();
-            enemies = new List<Tank>();
+            player = new Tank(Properties.Resources.tank1Fire1, 300, 300, ElementType.Fire, 10);
+
+            enemies = new List<Tank>
+            {
+                new Tank(Properties.Resources.tank2, 100, 100, ElementType.Fire, 5),
+                new Tank(Properties.Resources.tank2, 400, 300, ElementType.Fire, 5),
+                new Tank(Properties.Resources.tank2, 500, 100, ElementType.Fire, 5)
+            };
 
             gameTimer = new Timer
             {
                 Enabled = true,
-                Interval = 20
+                Interval = 1
             };
             gameTimer.Tick += MainTimerEvent;
             gameTimer.Start();
@@ -39,9 +45,11 @@ namespace ElementalTanks //FOR TEST
             Paint += (sender, args) =>
             {
                 args.Graphics.DrawImage(player.Sprite, player.X, player.Y, player.Sprite.Size.Width, player.Sprite.Size.Height);
-                
+                foreach (var enemy in enemies)
+                    args.Graphics.DrawImage(enemy.Sprite, enemy.X, enemy.Y, enemy.Sprite.Size.Width, enemy.Sprite.Size.Height);
             };
         }
+
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
@@ -53,11 +61,12 @@ namespace ElementalTanks //FOR TEST
                 player.X += player.MovementForDirection[player.Direction].Item1;
                 player.Y += player.MovementForDirection[player.Direction].Item2;
             }
+            
         }   
 
         private void UpdatePlayerRotation()
         {
-            player.Sprite = Properties.Resources.tank1;
+            player.Sprite = Properties.Resources.tank1Fire1;
             player.Sprite.RotateFlip(player.Rotations[player.Direction]);
         }
 
@@ -96,13 +105,13 @@ namespace ElementalTanks //FOR TEST
 
                 case Keys.Down:
                 case Keys.S:
-                    isGoing = true; 
+                    isGoing = true;
                     player.Direction = "Down";
                     break;
 
                 case Keys.Up:
                 case Keys.W:
-                    isGoing = true; 
+                    isGoing = true;
                     player.Direction = "Up";
                     break;
 
