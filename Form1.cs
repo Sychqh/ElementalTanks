@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ElementalTanks
+namespace ElementalTanks //FOR TEST
 {
     public partial class Form1 : Form
     {
@@ -75,7 +75,6 @@ namespace ElementalTanks
                 case Keys.W:
                     isGoing = false;
                     break;
-
             }
         }
 
