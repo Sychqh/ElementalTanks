@@ -14,22 +14,27 @@ namespace ElementalTanks
     {
         private readonly Tank player;
         private readonly List<Tank> enemies;
+        private readonly List<Bullet> bullets;
+
         private int score;
         private readonly Timer gameTimer;
         private bool isGoing;
+        private Random rnd;
 
         public Form1()
         {
             DoubleBuffered = true;
             InitializeComponent();
-            player = new Tank(1, 300, 300, ElementType.Fire, 10);
+            rnd = new Random();
 
+            player = new Tank(1, 300, 300, ElementType.Fire, 10);
             enemies = new List<Tank>
             {
                 new Tank(2, 100, 100, ElementType.Fire, 5),
                 new Tank(2, 400, 300, ElementType.Fire, 5),
                 new Tank(2, 500, 100, ElementType.Fire, 5)
             };
+            bullets = new List<Bullet>();
 
             gameTimer = new Timer
             {
@@ -47,13 +52,15 @@ namespace ElementalTanks
                 args.Graphics.DrawImage(player.Sprite, player.X, player.Y, player.Sprite.Size.Width, player.Sprite.Size.Height);
                 foreach (var enemy in enemies)
                     args.Graphics.DrawImage(enemy.Sprite, enemy.X, enemy.Y, enemy.Sprite.Size.Width, enemy.Sprite.Size.Height);
+                foreach(var bullet in bullets)
+                    args.Graphics.DrawImage(bullet.Sprite, bullet.X, bullet.Y, bullet.Sprite.Size.Width, bullet.Sprite.Size.Height);
             };
         }
 
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
-            UpdatePlayerRotation();
+            player.Rotate();
             Invalidate();
 
             if (isGoing && player.IsInBounds(this))
@@ -62,14 +69,6 @@ namespace ElementalTanks
                 player.Y += player.MovementForDirection[player.Direction].Item2;
             }
             
-
-        }   
-
-        private void UpdatePlayerRotation()
-        {
-            //player.Sprite = Properties.Resources.tank1Fire1;
-            //player.Sprite.RotateFlip(player.Rotations[player.Direction]);
-            player.Rotate();
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -125,8 +124,8 @@ namespace ElementalTanks
 
         private void Shoot()
         {
-            var shootEffect = player.ShootEffect;
-            Controls.Add(shootEffect);
+            var bullet = new Bullet(player.Element, 1, rnd.Next(0, 800), rnd.Next(0, 600));
+            bullets.Add(bullet);
         }
     }
 }

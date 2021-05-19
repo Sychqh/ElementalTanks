@@ -20,7 +20,6 @@ namespace ElementalTanks
     class Tank
     {
         public ElementType Element { get; }
-        public PictureBox ShootEffect { get; }
         public int Health { get; set; }
         public int MoveSpeed { get; private set; }
 
@@ -28,15 +27,8 @@ namespace ElementalTanks
         public int X { get; set; }
         public int Y { get; set; }
 
-        private Image SourceImage 
-        { 
-            get 
-            {
-                return (Image)Properties.Resources.ResourceManager.GetObject("tank" + spriteNumber.ToString() + Element.ToString(), Properties.Resources.Culture);
-            } 
-        }
         private readonly int spriteNumber;
-
+        private Image SourceImage => (Image)Properties.Resources.ResourceManager.GetObject("tank" + spriteNumber.ToString() + Element.ToString(), Properties.Resources.Culture);
         public Image Sprite { get; set; }
 
         public readonly Dictionary<string, RotateFlipType> Rotations;
