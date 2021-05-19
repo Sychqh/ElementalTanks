@@ -19,7 +19,7 @@ namespace ElementalTanks
 
     class Tank
     {
-        public ElementType Element { get; }
+        public ElementType Element { get; set; }
         public int Health { get; set; }
         public int MoveSpeed { get; private set; }
 
@@ -36,6 +36,7 @@ namespace ElementalTanks
 
         public Tank(int spriteNumber, int x, int y, ElementType element, int moveSpeed)
         {
+            Element = element;
             Health = 100;
             this.spriteNumber = spriteNumber;
             MoveSpeed = moveSpeed;
@@ -44,7 +45,6 @@ namespace ElementalTanks
             Y = y;
             Sprite = SourceImage;
            
-            Element = element;
 
             Rotations = new Dictionary<string, RotateFlipType>
             {
@@ -62,6 +62,7 @@ namespace ElementalTanks
                 ["Right"] = (MoveSpeed, 0)
             };
         }
+       
 
         public bool IsInBounds(Form form)
         {

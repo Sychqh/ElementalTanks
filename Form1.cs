@@ -30,9 +30,9 @@ namespace ElementalTanks
             player = new Tank(1, 300, 300, ElementType.Fire, 10);
             enemies = new List<Tank>
             {
-                new Tank(2, 100, 100, ElementType.Fire, 5),
+                new Tank(2, 100, 100, ElementType.Water, 5),
                 new Tank(2, 400, 300, ElementType.Fire, 5),
-                new Tank(2, 500, 100, ElementType.Fire, 5)
+                new Tank(2, 500, 100, ElementType.Water, 5)
             };
             bullets = new List<Bullet>();
 
@@ -61,6 +61,8 @@ namespace ElementalTanks
         private void MainTimerEvent(object sender, EventArgs e)
         {
             player.Rotate();
+            foreach (var enemy in enemies)
+                enemy.Rotate();
             Invalidate();
 
             if (isGoing && player.IsInBounds(this))

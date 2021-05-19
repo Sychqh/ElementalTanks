@@ -93,6 +93,16 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap tank1Water {
+            get {
+                object obj = ResourceManager.GetObject("tank1Water", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tank2 {
             get {
                 object obj = ResourceManager.GetObject("tank2", resourceCulture);
@@ -106,6 +116,16 @@ namespace ElementalTanks.Properties {
         internal static System.Drawing.Bitmap tank2Fire {
             get {
                 object obj = ResourceManager.GetObject("tank2Fire", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tank2Water {
+            get {
+                object obj = ResourceManager.GetObject("tank2Water", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
