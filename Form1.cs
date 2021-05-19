@@ -22,13 +22,13 @@ namespace ElementalTanks
         {
             DoubleBuffered = true;
             InitializeComponent();
-            player = new Tank(Properties.Resources.tank1Fire1, 300, 300, ElementType.Fire, 10);
+            player = new Tank(1, 300, 300, ElementType.Fire, 10);
 
             enemies = new List<Tank>
             {
-                new Tank(Properties.Resources.tank2, 100, 100, ElementType.Fire, 5),
-                new Tank(Properties.Resources.tank2, 400, 300, ElementType.Fire, 5),
-                new Tank(Properties.Resources.tank2, 500, 100, ElementType.Fire, 5)
+                new Tank(2, 100, 100, ElementType.Fire, 5),
+                new Tank(2, 400, 300, ElementType.Fire, 5),
+                new Tank(2, 500, 100, ElementType.Fire, 5)
             };
 
             gameTimer = new Timer
@@ -67,8 +67,9 @@ namespace ElementalTanks
 
         private void UpdatePlayerRotation()
         {
-            player.Sprite = Properties.Resources.tank1Fire1;
-            player.Sprite.RotateFlip(player.Rotations[player.Direction]);
+            //player.Sprite = Properties.Resources.tank1Fire1;
+            //player.Sprite.RotateFlip(player.Rotations[player.Direction]);
+            player.Rotate();
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)

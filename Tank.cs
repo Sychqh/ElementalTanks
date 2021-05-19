@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
@@ -26,20 +27,30 @@ namespace ElementalTanks
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public Image SourceImage { get; set; }
+
+        private Image SourceImage 
+        { 
+            get 
+            {
+                return (Image)Properties.Resources.ResourceManager.GetObject("tank" + spriteNumber.ToString() + Element.ToString(), Properties.Resources.Culture);
+            } 
+        }
+        private readonly int spriteNumber;
+
         public Image Sprite { get; set; }
 
         public readonly Dictionary<string, RotateFlipType> Rotations;
         public readonly Dictionary<string, (int, int)> MovementForDirection;
 
-        public Tank(Image sprite, int x, int y, ElementType element, int moveSpeed)
+        public Tank(int spriteNumber, int x, int y, ElementType element, int moveSpeed)
         {
             Health = 100;
+            this.spriteNumber = spriteNumber;
             MoveSpeed = moveSpeed;
             Direction = "Up";
             X = x;
             Y = y;
-            Sprite = sprite;
+            Sprite = SourceImage;
            
             Element = element;
 
@@ -70,6 +81,12 @@ namespace ElementalTanks
                 "Down" => Y + Sprite.Height < form.ClientSize.Height,
                 _ => true,
             };
+        }
+
+        public void Rotate()
+        {
+            Sprite = SourceImage;
+            Sprite.RotateFlip(Rotations[Direction]);
         }
     }
 }
