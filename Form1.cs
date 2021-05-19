@@ -62,6 +62,7 @@ namespace ElementalTanks
                 player.Y += player.MovementForDirection[player.Direction].Item2;
             }
             
+
         }   
 
         private void UpdatePlayerRotation()
