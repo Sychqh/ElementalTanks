@@ -9,6 +9,7 @@ namespace ElementalTanks
 {
     class Bullet
     {
+        public Tank Sender;
         public string Direction { get; set; }
         private readonly int spriteNumber;
         public ElementType Element { get; }
@@ -17,8 +18,9 @@ namespace ElementalTanks
         public int X { get; set; }
         public int Y { get; set; }
 
-        public Bullet(ElementType element, int spriteNumber, Point location, string direction)
+        public Bullet(Tank sender, ElementType element, int spriteNumber, Point location, string direction)
         {
+            Sender = sender;
             Element = element;
             this.spriteNumber = spriteNumber;
             Sprite = SourceImage;
@@ -29,6 +31,15 @@ namespace ElementalTanks
 
         public void Rotate()
         {
+            Sprite = SourceImage;
+            Sprite.RotateFlip(Tank.Rotations[Direction]);
+        }
+
+        public void Update()
+        {
+            X = Sender.GunPosition.X;
+            Y = Sender.GunPosition.Y;
+            Direction = Sender.Direction;
             Sprite = SourceImage;
             Sprite.RotateFlip(Tank.Rotations[Direction]);
         }

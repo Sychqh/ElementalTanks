@@ -48,7 +48,7 @@ namespace ElementalTanks
                 _ => Point.Empty
             };
         }
-
+        public PictureBox pic;
         public Tank(int spriteNumber, int x, int y, ElementType element, int moveSpeed)
         {
             Element = element;
@@ -78,6 +78,11 @@ namespace ElementalTanks
         {
             Sprite = SourceImage;
             Sprite.RotateFlip(Rotations[Direction]);
+        }
+
+        public void Move()
+        {
+
         }
     }
 }

@@ -15,6 +15,7 @@ namespace ElementalTanks
         private readonly Tank player;
         private readonly List<Tank> enemies;
         private readonly List<Bullet> bullets;
+        private readonly List<Bullet> deleted;
 
         private int score;
         private readonly Timer gameTimer;
@@ -27,10 +28,11 @@ namespace ElementalTanks
             InitializeComponent();
             rnd = new Random();
 
+            deleted = new List<Bullet>();
             player = new Tank(1, 300, 300, ElementType.Fire, 10);
             enemies = new List<Tank>
             {
-                new Tank(2, 100, 100, ElementType.Water, 5),
+                new Tank(2, 100, 100, ElementType.Fire, 5),
                 new Tank(2, 400, 300, ElementType.Fire, 5),
                 new Tank(2, 500, 100, ElementType.Water, 5)
             };
@@ -64,7 +66,7 @@ namespace ElementalTanks
             foreach (var enemy in enemies)
                 enemy.Rotate();
             foreach (var bullet in bullets)
-                bullet.Rotate();
+                bullet.Update();
             Invalidate();
 
             if (isGoing && player.IsInBounds(this))
@@ -88,6 +90,10 @@ namespace ElementalTanks
                 case Keys.Up:
                 case Keys.W:
                     isGoing = false;
+                    break;
+
+                case Keys.Space:
+                    bullets.Remove(bullets.First(b => b.Sender == player));
                     break;
             }
         }
@@ -128,7 +134,7 @@ namespace ElementalTanks
 
         private void Shoot()
         {
-            var bullet = new Bullet(player.Element, 1, player.GunPosition, player.Direction);
+            var bullet = new Bullet(player, player.Element, 1, player.GunPosition, player.Direction);
             bullets.Add(bullet);
         }
     }
