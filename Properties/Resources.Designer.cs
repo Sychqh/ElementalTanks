@@ -73,9 +73,9 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tank1 {
+        internal static System.Drawing.Bitmap tankFire1 {
             get {
-                object obj = ResourceManager.GetObject("tank1", resourceCulture);
+                object obj = ResourceManager.GetObject("tankFire1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tank1Fire {
+        internal static System.Drawing.Bitmap tankFire2 {
             get {
-                object obj = ResourceManager.GetObject("tank1Fire", resourceCulture);
+                object obj = ResourceManager.GetObject("tankFire2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tank1Water {
+        internal static System.Drawing.Bitmap tankNone1 {
             get {
-                object obj = ResourceManager.GetObject("tank1Water", resourceCulture);
+                object obj = ResourceManager.GetObject("tankNone1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tank2 {
+        internal static System.Drawing.Bitmap tankNone2 {
             get {
-                object obj = ResourceManager.GetObject("tank2", resourceCulture);
+                object obj = ResourceManager.GetObject("tankNone2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tank2Fire {
+        internal static System.Drawing.Bitmap tankWater2 {
             get {
-                object obj = ResourceManager.GetObject("tank2Fire", resourceCulture);
+                object obj = ResourceManager.GetObject("tankWater2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tank2Water {
+        internal static System.Drawing.Bitmap tankWatter1 {
             get {
-                object obj = ResourceManager.GetObject("tank2Water", resourceCulture);
+                object obj = ResourceManager.GetObject("tankWatter1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

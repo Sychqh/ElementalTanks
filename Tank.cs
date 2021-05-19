@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    class Tank
+    public class Tank
     {
         public ElementType Element { get; set; }
         public int Health { get; set; }
@@ -18,7 +18,7 @@ namespace ElementalTanks
         public int Y { get; set; }
 
         private readonly int spriteNumber;
-        private Image SourceImage => (Image)Properties.Resources.ResourceManager.GetObject("tank" + spriteNumber.ToString() + Element.ToString(), Properties.Resources.Culture);
+        private Image SourceImage => (Image)Properties.Resources.ResourceManager.GetObject("tank" + Element.ToString() + spriteNumber.ToString(), Properties.Resources.Culture);
         public Image Sprite { get; set; }
 
         public static readonly Dictionary<string, RotateFlipType> Rotations = new Dictionary<string, RotateFlipType>
@@ -48,7 +48,7 @@ namespace ElementalTanks
                 _ => Point.Empty
             };
         }
-        public PictureBox pic;
+        
         public Tank(int spriteNumber, int x, int y, ElementType element, int moveSpeed)
         {
             Element = element;
@@ -78,11 +78,6 @@ namespace ElementalTanks
         {
             Sprite = SourceImage;
             Sprite.RotateFlip(Rotations[Direction]);
-        }
-
-        public void Move()
-        {
-
         }
     }
 }

@@ -15,8 +15,7 @@ namespace ElementalTanks
         private readonly Tank player;
         private readonly List<Tank> enemies;
         private readonly List<Bullet> bullets;
-        private readonly List<Bullet> deleted;
-
+        private readonly List<Tank> deleted;
         private int score;
         private readonly Timer gameTimer;
         private bool isGoing;
@@ -28,7 +27,7 @@ namespace ElementalTanks
             InitializeComponent();
             rnd = new Random();
 
-            deleted = new List<Bullet>();
+            deleted = new List<Tank>();
             player = new Tank(1, 300, 300, ElementType.Fire, 10);
             enemies = new List<Tank>
             {
@@ -75,6 +74,18 @@ namespace ElementalTanks
                 player.Y += Tank.MovementForDirection[player.Direction].Item2 * player.MoveSpeed;
             }
             
+            foreach (var bullet in bullets)
+            {
+                foreach (var enemy in enemies)
+                {
+                    if (IsTankHit(bullet, enemy))
+                        deleted.Add(enemy);
+                }
+            }
+
+            if (deleted != null)
+                foreach (var delete in deleted)
+                    enemies.Remove(delete);
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
@@ -136,6 +147,14 @@ namespace ElementalTanks
         {
             var bullet = new Bullet(player, player.Element, 1, player.GunPosition, player.Direction);
             bullets.Add(bullet);
+        }
+
+        public bool IsTankHit(Bullet bullet, Tank tank)
+        {
+            return (bullet.X < tank.X + tank.Sprite.Width) &&
+            (tank.X < (bullet.X + bullet.Sprite.Width)) &&
+            (bullet.Y < tank.Y + tank.Sprite.Height) &&
+            (tank.Y < bullet.Y + bullet.Sprite.Height);
         }
     }
 }

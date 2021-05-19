@@ -121,22 +121,22 @@
   <data name="bulletFire1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bulletFire1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tank1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tankFire1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tankFire1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tank1Fire" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tank1Fire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tankFire2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tankFire2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tank1Water" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tank1Water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tankNone1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tankNone1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tank2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tank2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tankNone2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tankNone2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tank2Fire" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tank2Fire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tankWater2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tankWater2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tank2Water" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tank2Water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tankWatter1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tankWatter1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    class Bullet
+    public class Bullet
     {
         public Tank Sender;
         public string Direction { get; set; }
