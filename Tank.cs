@@ -7,16 +7,6 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    public enum ElementType
-    {
-        Fire,
-        Water,
-        Earth,
-        Wind,
-        Lightning,
-        Cold
-    }
-
     class Tank
     {
         public ElementType Element { get; set; }
@@ -31,8 +21,33 @@ namespace ElementalTanks
         private Image SourceImage => (Image)Properties.Resources.ResourceManager.GetObject("tank" + spriteNumber.ToString() + Element.ToString(), Properties.Resources.Culture);
         public Image Sprite { get; set; }
 
-        public readonly Dictionary<string, RotateFlipType> Rotations;
-        public readonly Dictionary<string, (int, int)> MovementForDirection;
+        public static readonly Dictionary<string, RotateFlipType> Rotations = new Dictionary<string, RotateFlipType>
+        {
+             ["Up"] = RotateFlipType.RotateNoneFlipNone,
+             ["Down"] = RotateFlipType.RotateNoneFlipY,
+             ["Left"] = RotateFlipType.Rotate90FlipX,
+             ["Right"] = RotateFlipType.Rotate90FlipNone
+        };
+
+        public static readonly Dictionary<string, (int, int)> MovementForDirection = new Dictionary<string, (int, int)> 
+        {
+            ["Up"] = (0, -1),
+            ["Down"] = (0, 1),
+            ["Left"] = (-1, 0),
+            ["Right"] = (1, 0)
+        };
+
+        public Point GunPosition 
+        { 
+            get => Direction switch
+            {
+                "Up" => new Point(X, Y - Sprite.Height),
+                "Down" => new Point(X, Y + Sprite.Height),
+                "Left" => new Point(X - Sprite.Width, Y),
+                "Right" => new Point(X + Sprite.Width, Y),
+                _ => Point.Empty
+            };
+        }
 
         public Tank(int spriteNumber, int x, int y, ElementType element, int moveSpeed)
         {
@@ -44,23 +59,6 @@ namespace ElementalTanks
             X = x;
             Y = y;
             Sprite = SourceImage;
-           
-
-            Rotations = new Dictionary<string, RotateFlipType>
-            {
-                ["Up"] = RotateFlipType.RotateNoneFlipNone,
-                ["Down"] = RotateFlipType.RotateNoneFlipY,
-                ["Left"] = RotateFlipType.Rotate90FlipX,
-                ["Right"] = RotateFlipType.Rotate90FlipNone
-            };
-
-            MovementForDirection = new Dictionary<string, (int, int)>
-            {
-                ["Up"] = (0, -MoveSpeed),
-                ["Down"] = (0, MoveSpeed),
-                ["Left"] = (-MoveSpeed, 0),
-                ["Right"] = (MoveSpeed, 0)
-            };
         }
        
 

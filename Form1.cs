@@ -19,7 +19,7 @@ namespace ElementalTanks
         private int score;
         private readonly Timer gameTimer;
         private bool isGoing;
-        private Random rnd;
+        private readonly Random rnd;
 
         public Form1()
         {
@@ -63,12 +63,14 @@ namespace ElementalTanks
             player.Rotate();
             foreach (var enemy in enemies)
                 enemy.Rotate();
+            foreach (var bullet in bullets)
+                bullet.Rotate();
             Invalidate();
 
             if (isGoing && player.IsInBounds(this))
             {
-                player.X += player.MovementForDirection[player.Direction].Item1;
-                player.Y += player.MovementForDirection[player.Direction].Item2;
+                player.X += Tank.MovementForDirection[player.Direction].Item1 * player.MoveSpeed;
+                player.Y += Tank.MovementForDirection[player.Direction].Item2 * player.MoveSpeed;
             }
             
         }
@@ -126,7 +128,7 @@ namespace ElementalTanks
 
         private void Shoot()
         {
-            var bullet = new Bullet(player.Element, 1, rnd.Next(0, 800), rnd.Next(0, 600));
+            var bullet = new Bullet(player.Element, 1, player.GunPosition, player.Direction);
             bullets.Add(bullet);
         }
     }
