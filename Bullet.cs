@@ -9,11 +9,11 @@ namespace ElementalTanks
 {
     public class Bullet
     {
+        private readonly int spriteNumber;
+        private Image SourceImage => (Image)Properties.Resources.ResourceManager.GetObject("bullet" + Element.ToString() + spriteNumber.ToString(), Properties.Resources.Culture);
         public Tank Sender;
         public string Direction { get; set; }
-        private readonly int spriteNumber;
         public ElementType Element { get; }
-        private Image SourceImage => (Image)Properties.Resources.ResourceManager.GetObject("bullet" + Element.ToString() + spriteNumber.ToString(), Properties.Resources.Culture);
         public Image Sprite { get; set; }
         public int X { get; set; }
         public int Y { get; set; }

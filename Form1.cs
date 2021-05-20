@@ -45,6 +45,7 @@ namespace ElementalTanks
             gameTimer.Tick += MainTimerEvent;
             gameTimer.Start();
 
+            KeyPress += KeyIsP;
             KeyDown += KeyIsDown;
             KeyUp += KeyIsUp;
 
@@ -58,6 +59,10 @@ namespace ElementalTanks
             };
         }
 
+        private void KeyIsP(object sender, KeyPressEventArgs e)
+        {
+            
+        }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
@@ -88,6 +93,7 @@ namespace ElementalTanks
                     enemies.Remove(delete);
         }
 
+
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -115,6 +121,7 @@ namespace ElementalTanks
             {
                 case Keys.Left:
                 case Keys.A:
+                    //player.X += Tank.MovementForDirection[player.Direction].Item1 * player.MoveSpeed;
                     isGoing = true;
                     player.Direction = "Left";
                     break;
@@ -133,6 +140,7 @@ namespace ElementalTanks
 
                 case Keys.Up:
                 case Keys.W:
+                    
                     isGoing = true;
                     player.Direction = "Up";
                     break;
