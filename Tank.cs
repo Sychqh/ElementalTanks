@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    public class Tank
+    public class Tank : IEntity
     {
         public ElementType Element { get; set; }
         public int Health { get; set; }
@@ -78,6 +78,11 @@ namespace ElementalTanks
         {
             Sprite = SourceImage;
             Sprite.RotateFlip(Rotations[Direction]);
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }
