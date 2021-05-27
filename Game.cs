@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    public class Game
+    public partial class Game
     {
         public readonly Player Player;
         public readonly List<IEntity> Entities;
@@ -51,9 +51,9 @@ namespace ElementalTanks
                 new Player(300, 300, ElementType.Fire),
             };
             Player = Entities[0] as Player;
-            Entities.Add(new Enemy(100, 100, ElementType.Water, Entities));
-            Entities.Add(new Enemy(600, 300, ElementType.Fire, Entities));
-            Entities.Add(new Enemy(100, 500, ElementType.Water, Entities));
+            Entities.Add(new Enemy(100, 100, ElementType.Water, Entities, 2));
+            Entities.Add(new Enemy(600, 300, ElementType.Fire, Entities, 0));
+            Entities.Add(new Enemy(100, 500, ElementType.Water, Entities, 5));
             Entities.Add(new Obstacle(150, 150, ElementType.Fire));
             Entities.Add(new Obstacle(200, 400, ElementType.Fire));
             Entities.Add(new Obstacle(550, 50, ElementType.Fire));

@@ -12,7 +12,7 @@ namespace ElementalTanks
         Cold
     }
 
-    public partial class Form1
+    public partial class Game
     {
         public static Dictionary<ElementType, Dictionary<ElementType, double>> elInterac = new Dictionary<ElementType, Dictionary<ElementType, double>>
         {

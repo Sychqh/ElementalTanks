@@ -26,7 +26,7 @@ namespace ElementalTanks
         private List<Point> pathToPlayer;
         private int currentIndex = 1;
 
-        public Enemy(int x, int y, ElementType element, List<IEntity> entities)
+        public Enemy(int x, int y, ElementType element, List<IEntity> entities, int moveSpeed)
         {
             player = entities[0] as Player;
             this.entities = entities;
@@ -34,7 +34,7 @@ namespace ElementalTanks
             Y = y;
             Element = element;
             Health = 100;
-            MoveSpeed = 5;
+            MoveSpeed = moveSpeed;
             Direction = "Up";
             pathToPlayer = FindPathToPlayer();
         }
