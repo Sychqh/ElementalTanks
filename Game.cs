@@ -9,9 +9,9 @@ namespace ElementalTanks
 {
     public class Game
     {
-        public readonly Player player;
-        public readonly List<IEntity> entities;
-        public readonly List<IEntity> deleted;
+        public readonly Player Player;
+        public readonly List<IEntity> Entities;
+        public readonly List<IEntity> Deleted;
 
         private readonly Dictionary<IEntity, Image> sourceImages;
         private readonly Form form;
@@ -46,56 +46,54 @@ namespace ElementalTanks
             this.sourceImages = sourceImages;
             this.form = form;
 
-            entities = new List<IEntity>
+            Entities = new List<IEntity>
             {
                 new Player(300, 300, ElementType.Fire),
             };
-            player = entities[0] as Player;
-            entities.Add(new Enemy(100, 100, ElementType.Water, entities));
-            entities.Add(new Enemy(600, 300, ElementType.Fire, entities));
-            entities.Add(new Enemy(100, 500, ElementType.Water, entities));
-            entities.Add(new Obstacle(150, 150, ElementType.Fire));
-            entities.Add(new Obstacle(200, 400, ElementType.Fire));
-            entities.Add(new Obstacle(550, 50, ElementType.Fire));
-            entities.Add(new Obstacle(400, 500, ElementType.Fire));
+            Player = Entities[0] as Player;
+            Entities.Add(new Enemy(100, 100, ElementType.Water, Entities));
+            Entities.Add(new Enemy(600, 300, ElementType.Fire, Entities));
+            Entities.Add(new Enemy(100, 500, ElementType.Water, Entities));
+            Entities.Add(new Obstacle(150, 150, ElementType.Fire));
+            Entities.Add(new Obstacle(200, 400, ElementType.Fire));
+            Entities.Add(new Obstacle(550, 50, ElementType.Fire));
+            Entities.Add(new Obstacle(400, 500, ElementType.Fire));
 
-            deleted = new List<IEntity>();
+            Deleted = new List<IEntity>();
 
         }
 
-        public void MainTimerEvent(object sender, EventArgs e)
+        public void Update()
         {
-            foreach(var entity in entities.Where(e => e is Enemy))
+            foreach(var entity in Entities.Where(e => e is Enemy))
             {
                 var enemy = entity as Enemy;
                 enemy.Move(enemy.FindNextDirection());
-
             }
-            foreach (var entity in entities)
+            foreach (var entity in Entities)
                 entity.Update();
 
-
-            foreach (var tank in entities.Where(e => e is ITank))
+            foreach (var tank in Entities.Where(e => e is ITank))
                 if (!IsEntityInBounds(form, tank))
                     (tank as ITank).MoveBack();
 
-            foreach (var e1 in entities)
+            foreach (var e1 in Entities)
             {
-                foreach (var e2 in entities.Where(e => e != e1))
+                foreach (var e2 in Entities.Where(e => e != e1))
                 {
                     if (AreCollided(e1, e2))
                     {
-                        player.MoveBack();
+                        Player.MoveBack();
                     }
                 }
             }
 
-            if (deleted != null)
+            if (Deleted != null)
             {
-                foreach (var delete in deleted)
-                    entities.Remove(delete);
+                foreach (var delete in Deleted)
+                    Entities.Remove(delete);
               
-                deleted.Clear();
+                Deleted.Clear();
             }
 
             //foreach (var bullet in entities.Where(ent => ent is Bullet))

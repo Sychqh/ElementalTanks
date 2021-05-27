@@ -25,7 +25,7 @@ namespace ElementalTanks
 
             sourceImages = new Dictionary<IEntity, Image>();
             game = new Game(this, sourceImages);
-            foreach (var entity in game.entities)
+            foreach (var entity in game.Entities)
             {
                 var spriteName = entity.GetType().Name + entity.Element.ToString();
                 sourceImages[entity] = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
@@ -37,15 +37,13 @@ namespace ElementalTanks
                 Interval = 1
             };
             gameTimer.Start();
-            gameTimer.Tick += game.MainTimerEvent;
-            gameTimer.Tick += UpdateSpriteImages;
-            gameTimer.Tick += (sender, args) => Invalidate();
+            gameTimer.Tick += MainTimerEvent;
 
             KeyDown += KeyIsDown;
             KeyUp += KeyIsUp;
             Paint += (sender, args) =>
             {
-                foreach (var entity in game.entities)
+                foreach (var entity in game.Entities)
                 {
                     var sprite = (Image)sourceImages[entity].Clone();
                     sprite.RotateFlip(Game.SpriteRotations[entity.Direction]);
@@ -54,9 +52,16 @@ namespace ElementalTanks
             };
         }
 
-        private void UpdateSpriteImages(object sender, EventArgs e)
+        private void MainTimerEvent(object sender, EventArgs e)
         {
-            foreach (var entity in game.entities)
+            game.Update();
+            UpdateSpriteImages();
+            Invalidate();
+        }
+
+        private void UpdateSpriteImages()
+        {
+            foreach (var entity in game.Entities)
             {
                 if (!sourceImages.ContainsKey(entity))
                 {
@@ -65,8 +70,8 @@ namespace ElementalTanks
                 }
             };
 
-            if (game.deleted != null)
-                foreach (var enitity in game.deleted)
+            if (game.Deleted != null)
+                foreach (var enitity in game.Deleted)
                     sourceImages.Remove(enitity);
         }
 
@@ -76,22 +81,22 @@ namespace ElementalTanks
             {
                 case Keys.Up:
                 case Keys.W:
-                    game.player.UpMovement = 0;
+                    game.Player.UpMovement = 0;
                     break;
 
                 case Keys.Down:
                 case Keys.S:
-                    game.player.DownMovement = 0;
+                    game.Player.DownMovement = 0;
                     break;
 
                 case Keys.Left:
                 case Keys.A:
-                    game.player.LeftMovement = 0;
+                    game.Player.LeftMovement = 0;
                     break;
 
                 case Keys.Right:
                 case Keys.D:
-                    game.player.RightMovement = 0;
+                    game.Player.RightMovement = 0;
                     break;
 
 
@@ -107,22 +112,22 @@ namespace ElementalTanks
             {
                 case Keys.Left:
                 case Keys.A:
-                    game.player.Move("Left");
+                    game.Player.Move("Left");
                     break;
 
                 case Keys.Right:
                 case Keys.D:
-                    game.player.Move("Right");
+                    game.Player.Move("Right");
                     break;
 
                 case Keys.Down:
                 case Keys.S:
-                    game.player.Move("Down");
+                    game.Player.Move("Down");
                     break;
 
                 case Keys.Up:
                 case Keys.W:
-                    game.player.Move("Up");
+                    game.Player.Move("Up");
                     break;
 
                 case Keys.Space:
