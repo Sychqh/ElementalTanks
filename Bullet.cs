@@ -7,6 +7,12 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
+    enum BulletType
+    {
+        Spray,
+        Projectile
+    }
+
     public class Bullet : IEntity
     {
         public ElementType Element { get; set; }

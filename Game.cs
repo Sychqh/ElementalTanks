@@ -13,7 +13,8 @@ namespace ElementalTanks
         public readonly List<IEntity> entities;
         public readonly List<IEntity> deleted;
 
-        public bool isGoing;
+        private readonly Dictionary<IEntity, Image> sourceImages;
+        private readonly Form form;
         private int score;
 
         public static readonly Dictionary<string, RotateFlipType> SpriteRotations = new Dictionary<string, RotateFlipType>
@@ -24,8 +25,19 @@ namespace ElementalTanks
             ["Right"] = RotateFlipType.Rotate90FlipNone
         };
 
-        public Game()
+        public static readonly Dictionary<string, Point> MovementForDirection = new Dictionary<string, Point>
         {
+            ["Up"] = new Point(0, -1),
+            ["Down"] = new Point(0, 1),
+            ["Left"] = new Point(-1, 0),
+            ["Right"] = new Point(1, 0)
+        };
+
+        public Game(Form form, Dictionary<IEntity, Image> sourceImages)
+        {
+            this.sourceImages = sourceImages;
+            this.form = form;
+
             entities = new List<IEntity>
             {
                 new Player(300, 300, ElementType.Fire),
@@ -43,12 +55,6 @@ namespace ElementalTanks
             foreach (var entity in entities)
                 entity.Update();
 
-            if (isGoing)
-            {
-                player.X += Tank.MovementForDirection[player.Direction].Item1 * player.MoveSpeed;
-                player.Y += Tank.MovementForDirection[player.Direction].Item2 * player.MoveSpeed;
-            }
-
             //foreach (var bullet in entities.Where(ent => ent is Bullet))
             //{
             //    foreach (var enemy in entities.Where(ent => ent is Enemy))
@@ -57,6 +63,17 @@ namespace ElementalTanks
             //            deleted.Add(enemy);
             //    }
             //}
+
+            foreach (var e1 in entities)
+            {
+                foreach (var e2 in entities.Where(e => e != e1))
+                {
+                    if (AreCollided(e1, e2))
+                        player.MoveBack();
+                    if (!IsEntityInBounds(form, e1))
+                        player.MoveBack();
+                }
+            }
 
             if (deleted != null)
             {
@@ -71,12 +88,24 @@ namespace ElementalTanks
         //    bullets.Add(bullet);
         //}
 
-        //public bool IsTankHit(Bullet bullet, Tank tank)
-        //{
-        //    return (bullet.X < tank.X + tank.Sprite.Width) &&
-        //    (tank.X < (bullet.X + bullet.Sprite.Width)) &&
-        //    (bullet.Y < tank.Y + tank.Sprite.Height) &&
-        //    (tank.Y < bullet.Y + bullet.Sprite.Height);
-        //}
+        public bool AreCollided(IEntity first, IEntity second)
+        {
+            return (first.X < second.X + sourceImages[second].Width) &&
+            (second.X < (first.X + sourceImages[first].Width)) &&
+            (first.Y < second.Y + sourceImages[second].Height) &&
+            (second.Y < first.Y + sourceImages[first].Height);
+        }
+
+        public bool IsEntityInBounds(Form form, IEntity entity)
+        {
+            return entity.Direction switch
+            {
+                "Left" => entity.X > 1,
+                "Up" => entity.Y > 1,
+                "Right" => entity.X + sourceImages[entity].Width < form.ClientSize.Width - 1,
+                "Down" => entity.Y + sourceImages[entity].Height < form.ClientSize.Height,
+                _ => true,
+            };
+        } 
     }
 }

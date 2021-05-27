@@ -36,6 +36,13 @@ namespace ElementalTanks
             ["Left"] = (-1, 0),
             ["Right"] = (1, 0)
         };
+        public static readonly Dictionary<string, Point> MovementForDirection1 = new Dictionary<string, Point>
+        {
+            ["Up"] = new Point(0, -1),
+            ["Down"] = new Point(0, 1),
+            ["Left"] = new Point(-1, 0),
+            ["Right"] = new Point(1, 0)
+        };
 
         public Point GunPosition 
         { 

@@ -13,9 +13,9 @@ namespace ElementalTanks
     public partial class Form1 : Form
     {
         private readonly Game game;
-        private readonly Dictionary<IEntity, Image> sourceImages;
         private readonly Random rnd;
         private readonly Timer gameTimer;
+        public readonly Dictionary<IEntity, Image> sourceImages;
 
         public Form1()
         {
@@ -23,8 +23,8 @@ namespace ElementalTanks
             InitializeComponent();
             rnd = new Random();
 
-            game = new Game();
             sourceImages = new Dictionary<IEntity, Image>();
+            game = new Game(this, sourceImages);
             foreach (var entity in game.entities)
             {
                 var spriteName = entity.GetType().Name + entity.Element.ToString();
@@ -79,11 +79,16 @@ namespace ElementalTanks
                 case Keys.A:
                 case Keys.Right:
                 case Keys.D:
+                    game.player.dx = 0;
+                    break;
+
                 case Keys.Down:
                 case Keys.S:
                 case Keys.Up:
                 case Keys.W:
-                    game.isGoing = false;
+                    //game.isGoing = false;
+                    //game.player.Stop();
+                    game.player.dy = 0;
                     break;
 
                 case Keys.Space:
@@ -98,27 +103,22 @@ namespace ElementalTanks
             {
                 case Keys.Left:
                 case Keys.A:
-                    //player.X += Tank.MovementForDirection[player.Direction].Item1 * player.MoveSpeed;
-                    game.isGoing = true;
-                    game.player.Direction = "Left";
+                    game.player.Move("Left");
                     break;
 
                 case Keys.Right:
                 case Keys.D:
-                    game.isGoing = true;
-                    game.player.Direction = "Right";
+                    game.player.Move("Right");
                     break;
 
                 case Keys.Down:
                 case Keys.S:
-                    game.isGoing = true;
-                    game.player.Direction = "Down";
+                    game.player.Move("Down");
                     break;
 
                 case Keys.Up:
                 case Keys.W:
-                    game.isGoing = true;
-                    game.player.Direction = "Up";
+                    game.player.Move("Up");
                     break;
 
                 case Keys.Space:
