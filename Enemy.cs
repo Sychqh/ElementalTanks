@@ -22,17 +22,19 @@ namespace ElementalTanks
         public int RightMovement { get; set; }
 
         private readonly Player player;
+        private readonly List<IEntity> entities;
         private List<Point> pathToPlayer;
         private int currentIndex = 1;
 
-        public Enemy(int x, int y, ElementType element, Player player)
+        public Enemy(int x, int y, ElementType element, List<IEntity> entities)
         {
-            this.player = player;
+            player = entities[0] as Player;
+            this.entities = entities;
             X = x;
             Y = y;
             Element = element;
             Health = 100;
-            MoveSpeed = 20;
+            MoveSpeed = 5;
             Direction = "Up";
             pathToPlayer = FindPathToPlayer();
         }
@@ -44,24 +46,44 @@ namespace ElementalTanks
 
         public void Update()
         {
-            X = pathToPlayer[currentIndex - 1].X;
-            Y = pathToPlayer[currentIndex - 1].Y;
-            if (currentIndex < pathToPlayer.Count - 1)
-            {
-                currentIndex++;
+            //Move(FindNextDirection());
+            if (X == player.X && Y == player.Y)
+                UpMovement = DownMovement = LeftMovement = RightMovement = 0;
 
-            }
-            else 
-            {
-                currentIndex = 1;
-                if (pathToPlayer[currentIndex - 1] != new Point(X, Y))
-                    pathToPlayer = FindPathToPlayer();
-            }
+            X += RightMovement - LeftMovement;
+            Y += DownMovement - UpMovement;
+
+
+            //X = pathToPlayer[currentIndex - 1].X;
+            //Y = pathToPlayer[currentIndex - 1].Y;
+            //if (currentIndex < pathToPlayer.Count - 1)
+            //{
+            //    currentIndex++;
+            //
+            //}
+            //else 
+            //{
+            //    currentIndex = 1;
+            //    if (pathToPlayer[currentIndex - 1] != new Point(X, Y))
+            //        pathToPlayer = FindPathToPlayer();
+            //}
         }
 
-        public void FindNextDirection(List<Point> path)
+        public string FindNextDirection()
         {
-
+            //pathToPlayer = FindPathToPlayer();
+            
+            if (currentIndex < pathToPlayer.Count - 1)
+            {
+                if (X == pathToPlayer[currentIndex].X && Y == pathToPlayer[currentIndex].Y)
+                    currentIndex++;
+                var newX = Math.Sign(pathToPlayer[currentIndex].X - pathToPlayer[currentIndex - 1].X);
+                var newY = Math.Sign(pathToPlayer[currentIndex].Y - pathToPlayer[currentIndex - 1].Y);
+                return Game.DirectionForMovement[new Point(newX, newY)];
+            }
+            else
+                UpMovement = DownMovement = LeftMovement = RightMovement = 0;
+            return Direction;
         }
 
         public void Move(string direction)
@@ -73,24 +95,31 @@ namespace ElementalTanks
                 case "Up":
                     UpMovement = MoveSpeed;
                     DownMovement = LeftMovement = RightMovement = 0;
+                    //Y -= MoveSpeed;
                     break;
                 case "Down":
                     DownMovement = MoveSpeed;
                     UpMovement = LeftMovement = RightMovement = 0;
+                    //Y += MoveSpeed;
                     break;
                 case "Left":
                     LeftMovement = MoveSpeed;
                     UpMovement = DownMovement = RightMovement = 0;
+                    //X -= MoveSpeed;
                     break;
                 case "Right":
                     RightMovement = MoveSpeed;
                     UpMovement = DownMovement = LeftMovement = 0;
+                    //X += MoveSpeed;
                     break;
             }
         }
         public void MoveBack()
         {
-            
+            X -= MoveSpeed;
+            Y -= MoveSpeed;
+            //X -= RightMovement - LeftMovement;
+            //Y -= DownMovement - UpMovement;
         }
 
         private List<Point> FindPathToPlayer()
@@ -107,10 +136,10 @@ namespace ElementalTanks
                 var current = queue.Dequeue();
                 var neighbours = new[]
                 {
-                        new Point(current.Value.X + 100, current.Value.Y),
-                        new Point(current.Value.X - 100, current.Value.Y),
-                        new Point(current.Value.X, current.Value.Y + 100),
-                        new Point(current.Value.X, current.Value.Y - 100)
+                        new Point(current.Value.X + 10, current.Value.Y),
+                        new Point(current.Value.X - 10, current.Value.Y),
+                        new Point(current.Value.X, current.Value.Y + 10),
+                        new Point(current.Value.X, current.Value.Y - 10)
                 }.Where(n => !visited.Contains(n));
 
                 foreach (var neighbour in neighbours)
@@ -119,6 +148,8 @@ namespace ElementalTanks
                     visited.Add(neighbour);
                     queue.Enqueue(next);
 
+                    if (entities.Where(e => !(e is Player)).Any(en => neighbour.Equals(new Point(en.X, en.Y))))
+                        continue;
                     if (neighbour.Equals(new Point(player.X, player.Y)))
                     {
                         var finalPath = next.ToList();
