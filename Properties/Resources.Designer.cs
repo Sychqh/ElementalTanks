@@ -103,6 +103,16 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ObstacleFire {
+            get {
+                object obj = ResourceManager.GetObject("ObstacleFire", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PlayerFire {
             get {
                 object obj = ResourceManager.GetObject("PlayerFire", resourceCulture);

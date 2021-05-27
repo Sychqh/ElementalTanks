@@ -33,6 +33,14 @@ namespace ElementalTanks
             ["Right"] = new Point(1, 0)
         };
 
+        public static readonly Dictionary<Point, string> DirectionForMovement = new Dictionary<Point, string>
+        {
+            [new Point(0, -1)] = "Up",
+            [new Point(0, 1)] = "Down",
+            [new Point(-1, 0)] = "Left",
+            [new Point(1, 0)] = "Right"
+        };
+
         public Game(Form form, Dictionary<IEntity, Image> sourceImages)
         {
             this.sourceImages = sourceImages;
@@ -41,12 +49,17 @@ namespace ElementalTanks
             entities = new List<IEntity>
             {
                 new Player(300, 300, ElementType.Fire),
-                new Enemy(100, 100, ElementType.Water),
-                new Enemy(600, 300, ElementType.Fire),
-                new Enemy(100, 500, ElementType.Water),
             };
-            deleted = new List<IEntity>();
             player = entities[0] as Player;
+            entities.Add(new Enemy(100, 100, ElementType.Water, player));
+            entities.Add(new Enemy(600, 300, ElementType.Fire, player));
+            entities.Add(new Enemy(100, 500, ElementType.Water, player));
+            entities.Add(new Obstacle(150, 150, ElementType.Fire));
+            entities.Add(new Obstacle(200, 400, ElementType.Fire));
+            entities.Add(new Obstacle(550, 50, ElementType.Fire));
+            entities.Add(new Obstacle(400, 500, ElementType.Fire));
+
+            deleted = new List<IEntity>();
 
         }
 
@@ -64,13 +77,15 @@ namespace ElementalTanks
             //    }
             //}
 
+            foreach (var tank in entities.Where(e => e is ITank))
+                if (!IsEntityInBounds(form, tank))
+                    (tank as ITank).MoveBack();
+
             foreach (var e1 in entities)
             {
                 foreach (var e2 in entities.Where(e => e != e1))
                 {
                     if (AreCollided(e1, e2))
-                        player.MoveBack();
-                    if (!IsEntityInBounds(form, e1))
                         player.MoveBack();
                 }
             }

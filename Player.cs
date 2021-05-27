@@ -14,11 +14,10 @@ namespace ElementalTanks
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-
-       
-
-        public int dx;
-        public int dy;
+        public int UpMovement { get; set; } 
+        public int DownMovement { get; set; }
+        public int LeftMovement { get; set; }
+        public int RightMovement { get; set; }
 
         public Player(int x, int y, ElementType element)
         {
@@ -28,39 +27,45 @@ namespace ElementalTanks
             Health = 100;
             MoveSpeed = 5;
             Direction = "Up";
-            dx = dy = 0;
         }
 
         public void Update()
         {
-            X += dx;
-            Y += dy;
+            X += RightMovement - LeftMovement;
+            Y += DownMovement - UpMovement;
         }
 
         public void Move(string direction)
         {
             Direction = direction;
 
-            dx = Game.MovementForDirection[direction].X * MoveSpeed;
-            dy = Game.MovementForDirection[direction].Y * MoveSpeed;
+            switch (Direction)
+            {
+                case "Up":
+                    UpMovement = MoveSpeed;
+                    DownMovement = LeftMovement = RightMovement = 0;
+                    break;
+                case "Down":
+                    DownMovement = MoveSpeed;
+                    UpMovement = LeftMovement = RightMovement = 0;
+                    break;
+                case "Left":
+                    LeftMovement = MoveSpeed;
+                    UpMovement = DownMovement = RightMovement = 0;
+                    break;
+                case "Right":
+                    RightMovement = MoveSpeed;
+                    UpMovement = DownMovement = LeftMovement = 0;
+                    break;
+            }
         }
 
         public void MoveBack()
         {
-            X -= dx;
-            Y -= dy;
+            X -= RightMovement - LeftMovement;
+            Y -= DownMovement - UpMovement;
         }
-        //public bool IsInBounds(Form form)
-        //{
-        //    return Direction switch
-        //    {
-        //        "Left" => X > 1,
-        //        "Up" => Y > 1,
-        //        "Right" => X + form..Width < form.ClientSize.Width - 1,
-        //        "Down" => Y + Sprite.Height < form.ClientSize.Height,
-        //        _ => true,
-        //    };
-        //}
+
         public Point GunPosition(Image sprite)
         {
             return Direction switch
