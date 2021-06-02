@@ -46,15 +46,15 @@ namespace ElementalTanks
 
             Entities = new List<IEntity>
             {
-                new Player(300, 300, new Fire()),
+                new Player(300, 300, new Water()),
             };
             Player = Entities[0] as Player;
-            Entities.Add(new Enemy(100, 100, new Fire(), Entities, 1));
-            //Entities.Add(new Enemy(200, 100, ElementType.Water, Entities, 0));
-            //Entities.Add(new Enemy(300, 100, ElementType.Earth, Entities, 0));
-            //Entities.Add(new Enemy(400, 100, ElementType.Wind, Entities, 0));
-            //Entities.Add(new Enemy(500, 100, ElementType.Lightning, Entities, 0));
-            //Entities.Add(new Enemy(500, 200, ElementType.Cold, Entities, 0));
+            Entities.Add(new Enemy(100, 100, new Fire(), Player, 1));
+            Entities.Add(new Enemy(200, 100, new Water(), Player, 2));
+            Entities.Add(new Enemy(300, 100, new Earth(), Player, 1));
+            Entities.Add(new Enemy(400, 100, new Wind(), Player, 1));
+            Entities.Add(new Enemy(500, 100, new Lightning(), Player, 4));
+            Entities.Add(new Enemy(500, 200, new Cold(), Player, 2));
             //Entities.Add(new Obstacle(100, 500, ElementType.Fire));
             //Entities.Add(new Obstacle(200, 500, ElementType.Water));
             //Entities.Add(new Obstacle(300, 500, ElementType.Earth));
@@ -76,20 +76,40 @@ namespace ElementalTanks
             foreach (var entity in Entities)
                 entity.Update();
 
-            foreach (var tank in Entities.Where(e => e is ITank))
-                if (!IsEntityInBounds(form, tank))
-                    (tank as ITank).MoveBack();
-
-            foreach (var e1 in Entities)
+            foreach (var entity in Entities)
             {
-                foreach (var e2 in Entities.Where(e => e != e1))
+                if (!IsEntityInBounds(form, entity))
+                    if (entity is Bullet)
+                        Deleted.Add(entity);
+                    else if (entity is ITank) 
+                        (entity as ITank).MoveBack();
+            }
+
+            foreach (var bullet in Entities.Where(ent => ent is Bullet))
+            {
+                foreach (var tank in Entities.Where(ent => ent is ITank))
                 {
-                    if (AreCollided(e1, e2))
-                    {
-                        Player.MoveBack();
-                    }
+                    if (AreCollided(bullet, tank))
+                        (tank as ITank).TakeDamage(bullet as Bullet);
                 }
             }
+
+            foreach (var tank in Entities.Where(ent => ent is ITank))
+            {
+                if ((tank as ITank).Health < 0)
+                    Deleted.Add(tank);
+
+            }
+            //foreach (var e1 in Entities)
+            //{
+            //    foreach (var e2 in Entities.Where(e => e != e1))
+            //    {
+            //        if (AreCollided(e1, e2))
+            //        {
+            //            Player.MoveBack();
+            //        }
+            //    }
+            //}
 
             if (Deleted != null)
             {
@@ -99,14 +119,6 @@ namespace ElementalTanks
                 Deleted.Clear();
             }
 
-            //foreach (var bullet in entities.Where(ent => ent is Bullet))
-            //{
-            //    foreach (var enemy in entities.Where(ent => ent is Enemy))
-            //    {
-            //        //if (IsTankHit(bullet as Bullet, enemy as Enemy))
-            //            deleted.Add(enemy);
-            //    }
-            //}
         }
 
         public bool AreCollided(IEntity first, IEntity second)

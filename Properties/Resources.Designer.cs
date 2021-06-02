@@ -63,6 +63,26 @@ namespace ElementalTanks.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BulletCold {
+            get {
+                object obj = ResourceManager.GetObject("BulletCold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BulletEarth {
+            get {
+                object obj = ResourceManager.GetObject("BulletEarth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BulletFire {
             get {
                 object obj = ResourceManager.GetObject("BulletFire", resourceCulture);
@@ -76,6 +96,36 @@ namespace ElementalTanks.Properties {
         internal static System.Drawing.Bitmap BulletLightning {
             get {
                 object obj = ResourceManager.GetObject("BulletLightning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BulletNone {
+            get {
+                object obj = ResourceManager.GetObject("BulletNone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BulletWater {
+            get {
+                object obj = ResourceManager.GetObject("BulletWater", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BulletWind {
+            get {
+                object obj = ResourceManager.GetObject("BulletWind", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

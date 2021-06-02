@@ -42,7 +42,7 @@ namespace ElementalTanks
                     var spriteName = entity.GetType().Name + entity.Element.GetType().Name;
                     var sprite = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
                     sprite.RotateFlip(Game.SpriteRotations[entity.Direction]);
-                    args.Graphics.DrawImage(sprite, entity.X, entity.Y, entity.Width, entity.Height);//sprite.Size.Width, sprite.Size.Height);
+                    args.Graphics.DrawImage(sprite, entity.X, entity.Y, entity.Width, entity.Height);
                 }
             };
         }
@@ -52,6 +52,7 @@ namespace ElementalTanks
             game.Update();
             Invalidate();
         }
+
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -76,9 +77,10 @@ namespace ElementalTanks
                     game.Player.RightMovement = 0;
                     break;
 
-
                 case Keys.Space:
-                    //bullets.Remove(bullets.First(b => b.Sender == player));
+                    game.Player.IsShooting = false;
+                    if (game.Player.Element.Type == BulletType.Spray)
+                        game.Deleted.Add(game.Entities.First(en => en is Bullet && (en as Bullet).Sender is Player));
                     break;
             }
         }
@@ -108,7 +110,11 @@ namespace ElementalTanks
                     break;
 
                 case Keys.Space:
-                    //Shoot();
+                    if (!game.Player.IsShooting)
+                    {
+                        game.Player.IsShooting = true;
+                        game.Entities.Add(game.Player.Shoot());
+                    }
                     break;
             }
         }

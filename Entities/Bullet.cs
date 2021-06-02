@@ -7,12 +7,6 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    enum BulletType
-    {
-        Spray,
-        Projectile
-    }
-
     public class Bullet : IEntity
     {
         public IElement Element { get; set; }
@@ -22,24 +16,38 @@ namespace ElementalTanks
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public int MoveSpeed { get; set; }
         public ITank Sender;
 
-        public Bullet(ITank sender, IElement element, int spriteNumber, Point location, string direction)
+        public Bullet(ITank sender)
         {
             Sender = sender;
-            Element = element;
-            X = location.X;
-            Y = location.Y;
-            Direction = direction;
+            Element = sender.Element;
+            X = sender.GunPosition.X;
+            Y = sender.GunPosition.Y;
+            Direction = sender.Direction;
+            Width = Height = 64;
+            MoveSpeed = 10;
         }
 
         public void Update()
         {
-            //X = Sender.GunPosition.X;
-            //Y = Sender.GunPosition.Y;
-            Direction = Sender.Direction;
-            //Sprite = SourceImage;
-            //Sprite.RotateFlip(Tank.Rotations[Direction]);
+            if (Sender.Element.Type == BulletType.Spray)
+            {
+                Direction = Sender.Direction;
+                X = Sender.GunPosition.X;
+                Y = Sender.GunPosition.Y;
+            }
+            else
+            {
+                X += Game.MovementForDirection[Direction].X * MoveSpeed;
+                Y += Game.MovementForDirection[Direction].Y * MoveSpeed;
+            }
+        }
+
+        public void Move(string direction)
+        {
+            
         }
     }
 }

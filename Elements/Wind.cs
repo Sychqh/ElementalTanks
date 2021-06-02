@@ -9,12 +9,13 @@ namespace ElementalTanks
         public double BaseDamage { get; }
         public int Width { get; }
         public int Height { get; }
+        public BulletType Type { get; }
 
         public Wind()
         {
             BaseDamage = 7.0;
-            Width = 63;
-            Height = 84;
+            Width = Height = 64;
+            Type = BulletType.Spray;
         }
 
         public double GetFinalDamage(IElement enemy)

@@ -9,12 +9,13 @@ namespace ElementalTanks
         public double BaseDamage { get; }
         public int Width { get; }
         public int Height { get; }
+        public BulletType Type { get; }
 
         public Lightning()
         {
             BaseDamage = 15.0;
-            Width = 48;
-            Height = 100;
+            Width = Height = 64;
+            Type = BulletType.Spray;
         }
 
         public double GetFinalDamage(IElement enemy)

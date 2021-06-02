@@ -118,11 +118,26 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BulletCold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BulletCold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BulletEarth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BulletEarth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BulletFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BulletFire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BulletLightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BulletLightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BulletNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BulletNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BulletWater" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BulletWater.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BulletWind" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BulletWind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EnemyCold" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EnemyCold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

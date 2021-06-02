@@ -7,15 +7,16 @@ namespace ElementalTanks
 {
     public interface ITank : IEntity
     {
-        public int Health { get; set; }
+        public double Health { get; set; }
         public int MoveSpeed { get; set; }
-        public Point GunPosition();
+        public Point GunPosition { get; }
         public int UpMovement { get; set; }
         public int DownMovement { get; set; }
         public int LeftMovement { get; set; }
         public int RightMovement { get; set; }
 
         public void Move(string direction);
+        public void TakeDamage(Bullet bullet);
         public void MoveBack();
     }
 }

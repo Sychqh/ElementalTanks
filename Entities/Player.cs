@@ -9,7 +9,7 @@ namespace ElementalTanks
     public class Player : ITank
     {
         public IElement Element { get; set; }
-        public int Health { get; set; }
+        public double Health { get; set; }
         public int MoveSpeed { get; set; }
         public string Direction { get; set; }
         public int X { get; set; }
@@ -20,12 +20,22 @@ namespace ElementalTanks
         public int RightMovement { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool IsShooting { get; set; }
+
+        public Point GunPosition => Direction switch
+        {
+            "Up" => new Point(X + 6, Y - Element.Height + 6),
+            "Down" => new Point(X + 6, Y + Height - 6),
+            "Left" => new Point(X - Element.Width + 6, Y + 6),
+            "Right" => new Point(X + Width - 6, Y + 6),
+            _ => Point.Empty
+        };
 
         public Player(int x, int y, IElement element)
         {
             X = x;
             Y = y;
-            Width = Height = 77;
+            Width = Height = 80;
             Element = element;
             Health = 100;
             MoveSpeed = 10;
@@ -69,16 +79,15 @@ namespace ElementalTanks
             Y -= DownMovement - UpMovement;
         }
 
-        public Point GunPosition()
+        public Bullet Shoot()
         {
-            return Direction switch
-            {
-                "Up" => new Point(X, Y - Height),
-                "Down" => new Point(X, Y + Height),
-                "Left" => new Point(X - Width, Y),
-                "Right" => new Point(X + Width, Y),
-                _ => Point.Empty
-            };
+            return new Bullet(this);
+        }
+
+        public void TakeDamage(Bullet bullet)
+        {
+            if (bullet.Sender is Enemy)
+                Health -= bullet.Element.GetFinalDamage(Element);
         }
     }
 }
