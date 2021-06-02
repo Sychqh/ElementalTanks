@@ -45,7 +45,9 @@ namespace ElementalTanks
             {
                 foreach (var entity in game.Entities)
                 {
-                    var sprite = (Image)sourceImages[entity].Clone();
+                    //var sprite = (Image)sourceImages[entity].Clone();
+                    var spriteName = entity.GetType().Name + entity.Element.ToString();
+                    var sprite = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
                     sprite.RotateFlip(Game.SpriteRotations[entity.Direction]);
                     args.Graphics.DrawImage(sprite, entity.X, entity.Y, sprite.Size.Width, sprite.Size.Height);
                 }

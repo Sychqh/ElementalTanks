@@ -121,8 +121,20 @@
   <data name="BulletFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BulletFire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BulletLightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BulletLightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EnemyCold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemyCold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EnemyEarth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemyEarth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="EnemyFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EnemyFire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EnemyLightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemyLightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EnemyNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EnemyNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,16 +142,46 @@
   <data name="EnemyWater" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EnemyWater.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="EnemyWind" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemyWind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObstacleCold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ObstacleCold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObstacleEarth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ObstacleEarth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ObstacleFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ObstacleFire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ObstacleLightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ObstacleLightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObstacleWater" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ObstacleWater.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ObstacleWind" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ObstacleWind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerCold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerCold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerEarth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerEarth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PlayerFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerFire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerLightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerLightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlayerNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlayerWater" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerWater.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerWind" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerWind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

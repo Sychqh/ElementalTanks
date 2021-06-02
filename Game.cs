@@ -51,13 +51,18 @@ namespace ElementalTanks
                 new Player(300, 300, ElementType.Fire),
             };
             Player = Entities[0] as Player;
-            Entities.Add(new Enemy(100, 100, ElementType.Water, Entities, 2));
-            Entities.Add(new Enemy(600, 300, ElementType.Fire, Entities, 0));
-            Entities.Add(new Enemy(100, 500, ElementType.Water, Entities, 5));
-            Entities.Add(new Obstacle(150, 150, ElementType.Fire));
-            Entities.Add(new Obstacle(200, 400, ElementType.Fire));
-            Entities.Add(new Obstacle(550, 50, ElementType.Fire));
-            Entities.Add(new Obstacle(400, 500, ElementType.Fire));
+            Entities.Add(new Enemy(100, 100, ElementType.Fire, Entities, 0));
+            Entities.Add(new Enemy(200, 100, ElementType.Water, Entities, 0));
+            Entities.Add(new Enemy(300, 100, ElementType.Earth, Entities, 0));
+            Entities.Add(new Enemy(400, 100, ElementType.Wind, Entities, 0));
+            Entities.Add(new Enemy(500, 100, ElementType.Lightning, Entities, 0));
+            Entities.Add(new Enemy(500, 200, ElementType.Cold, Entities, 0));
+            Entities.Add(new Obstacle(100, 500, ElementType.Fire));
+            Entities.Add(new Obstacle(200, 500, ElementType.Water));
+            Entities.Add(new Obstacle(300, 500, ElementType.Earth));
+            Entities.Add(new Obstacle(400, 500, ElementType.Wind));
+            Entities.Add(new Obstacle(500, 500, ElementType.Lightning));
+            Entities.Add(new Obstacle(100, 400, ElementType.Cold));
 
             Deleted = new List<IEntity>();
 
@@ -65,11 +70,11 @@ namespace ElementalTanks
 
         public void Update()
         {
-            foreach(var entity in Entities.Where(e => e is Enemy))
-            {
-                var enemy = entity as Enemy;
-                enemy.Move(enemy.FindNextDirection());
-            }
+            //foreach(var entity in Entities.Where(e => e is Enemy))
+            //{
+            //    var enemy = entity as Enemy;
+            //    enemy.Move(enemy.FindNextDirection());
+            //}
             foreach (var entity in Entities)
                 entity.Update();
 
