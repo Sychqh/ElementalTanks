@@ -8,7 +8,7 @@ namespace ElementalTanks
 {
     public class Player : ITank
     {
-        public ElementType Element { get; set; }
+        public IElement Element { get; set; }
         public int Health { get; set; }
         public int MoveSpeed { get; set; }
         public string Direction { get; set; }
@@ -18,14 +18,17 @@ namespace ElementalTanks
         public int DownMovement { get; set; }
         public int LeftMovement { get; set; }
         public int RightMovement { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
-        public Player(int x, int y, ElementType element)
+        public Player(int x, int y, IElement element)
         {
             X = x;
             Y = y;
+            Width = Height = 77;
             Element = element;
             Health = 100;
-            MoveSpeed = 5;
+            MoveSpeed = 10;
             Direction = "Up";
         }
 
@@ -66,14 +69,14 @@ namespace ElementalTanks
             Y -= DownMovement - UpMovement;
         }
 
-        public Point GunPosition(Image sprite)
+        public Point GunPosition()
         {
             return Direction switch
             {
-                "Up" => new Point(X, Y - sprite.Height),
-                "Down" => new Point(X, Y + sprite.Height),
-                "Left" => new Point(X - sprite.Width, Y),
-                "Right" => new Point(X + sprite.Width, Y),
+                "Up" => new Point(X, Y - Height),
+                "Down" => new Point(X, Y + Height),
+                "Left" => new Point(X - Width, Y),
+                "Right" => new Point(X + Width, Y),
                 _ => Point.Empty
             };
         }

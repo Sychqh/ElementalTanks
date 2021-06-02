@@ -15,7 +15,6 @@ namespace ElementalTanks
         private readonly Game game;
         private readonly Random rnd;
         private readonly Timer gameTimer;
-        public readonly Dictionary<IEntity, Image> sourceImages;
 
         public Form1()
         {
@@ -23,13 +22,7 @@ namespace ElementalTanks
             InitializeComponent();
             rnd = new Random();
 
-            sourceImages = new Dictionary<IEntity, Image>();
-            game = new Game(this, sourceImages);
-            foreach (var entity in game.Entities)
-            {
-                var spriteName = entity.GetType().Name + entity.Element.ToString();
-                sourceImages[entity] = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
-            };
+            game = new Game(this);
 
             gameTimer = new Timer
             {
@@ -46,10 +39,10 @@ namespace ElementalTanks
                 foreach (var entity in game.Entities)
                 {
                     //var sprite = (Image)sourceImages[entity].Clone();
-                    var spriteName = entity.GetType().Name + entity.Element.ToString();
+                    var spriteName = entity.GetType().Name + entity.Element.GetType().Name;
                     var sprite = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
                     sprite.RotateFlip(Game.SpriteRotations[entity.Direction]);
-                    args.Graphics.DrawImage(sprite, entity.X, entity.Y, sprite.Size.Width, sprite.Size.Height);
+                    args.Graphics.DrawImage(sprite, entity.X, entity.Y, entity.Width, entity.Height);//sprite.Size.Width, sprite.Size.Height);
                 }
             };
         }
@@ -57,26 +50,8 @@ namespace ElementalTanks
         private void MainTimerEvent(object sender, EventArgs e)
         {
             game.Update();
-            UpdateSpriteImages();
             Invalidate();
         }
-
-        private void UpdateSpriteImages()
-        {
-            foreach (var entity in game.Entities)
-            {
-                if (!sourceImages.ContainsKey(entity))
-                {
-                    var spriteName = entity.GetType().Name + entity.Element.ToString();
-                    sourceImages[entity] = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
-                }
-            };
-
-            if (game.Deleted != null)
-                foreach (var enitity in game.Deleted)
-                    sourceImages.Remove(enitity);
-        }
-
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)

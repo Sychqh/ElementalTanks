@@ -9,7 +9,7 @@ namespace ElementalTanks
     {
         public int Health { get; set; }
         public int MoveSpeed { get; set; }
-        public Point GunPosition(Image sprite);
+        public Point GunPosition();
         public int UpMovement { get; set; }
         public int DownMovement { get; set; }
         public int LeftMovement { get; set; }

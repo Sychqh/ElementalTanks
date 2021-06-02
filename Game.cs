@@ -7,13 +7,12 @@ using System.Drawing;
 
 namespace ElementalTanks
 {
-    public partial class Game
+    public class Game
     {
         public readonly Player Player;
         public readonly List<IEntity> Entities;
         public readonly List<IEntity> Deleted;
 
-        private readonly Dictionary<IEntity, Image> sourceImages;
         private readonly Form form;
         private int score;
 
@@ -41,28 +40,27 @@ namespace ElementalTanks
             [new Point(1, 0)] = "Right"
         };
 
-        public Game(Form form, Dictionary<IEntity, Image> sourceImages)
+        public Game(Form form)
         {
-            this.sourceImages = sourceImages;
             this.form = form;
 
             Entities = new List<IEntity>
             {
-                new Player(300, 300, ElementType.Fire),
+                new Player(300, 300, new Fire()),
             };
             Player = Entities[0] as Player;
-            Entities.Add(new Enemy(100, 100, ElementType.Fire, Entities, 0));
-            Entities.Add(new Enemy(200, 100, ElementType.Water, Entities, 0));
-            Entities.Add(new Enemy(300, 100, ElementType.Earth, Entities, 0));
-            Entities.Add(new Enemy(400, 100, ElementType.Wind, Entities, 0));
-            Entities.Add(new Enemy(500, 100, ElementType.Lightning, Entities, 0));
-            Entities.Add(new Enemy(500, 200, ElementType.Cold, Entities, 0));
-            Entities.Add(new Obstacle(100, 500, ElementType.Fire));
-            Entities.Add(new Obstacle(200, 500, ElementType.Water));
-            Entities.Add(new Obstacle(300, 500, ElementType.Earth));
-            Entities.Add(new Obstacle(400, 500, ElementType.Wind));
-            Entities.Add(new Obstacle(500, 500, ElementType.Lightning));
-            Entities.Add(new Obstacle(100, 400, ElementType.Cold));
+            Entities.Add(new Enemy(100, 100, new Fire(), Entities, 1));
+            //Entities.Add(new Enemy(200, 100, ElementType.Water, Entities, 0));
+            //Entities.Add(new Enemy(300, 100, ElementType.Earth, Entities, 0));
+            //Entities.Add(new Enemy(400, 100, ElementType.Wind, Entities, 0));
+            //Entities.Add(new Enemy(500, 100, ElementType.Lightning, Entities, 0));
+            //Entities.Add(new Enemy(500, 200, ElementType.Cold, Entities, 0));
+            //Entities.Add(new Obstacle(100, 500, ElementType.Fire));
+            //Entities.Add(new Obstacle(200, 500, ElementType.Water));
+            //Entities.Add(new Obstacle(300, 500, ElementType.Earth));
+            //Entities.Add(new Obstacle(400, 500, ElementType.Wind));
+            //Entities.Add(new Obstacle(500, 500, ElementType.Lightning));
+            //Entities.Add(new Obstacle(100, 400, ElementType.Cold));
 
             Deleted = new List<IEntity>();
 
@@ -113,10 +111,10 @@ namespace ElementalTanks
 
         public bool AreCollided(IEntity first, IEntity second)
         {
-            return (first.X < second.X + sourceImages[second].Width) &&
-            (second.X < (first.X + sourceImages[first].Width)) &&
-            (first.Y < second.Y + sourceImages[second].Height) &&
-            (second.Y < first.Y + sourceImages[first].Height);
+            return (first.X < second.X + second.Width) &&
+            (second.X < (first.X + first.Width)) &&
+            (first.Y < second.Y + second.Height) &&
+            (second.Y < first.Y + first.Height);
         }
 
         public bool IsEntityInBounds(Form form, IEntity entity)
@@ -125,8 +123,8 @@ namespace ElementalTanks
             {
                 "Left" => entity.X > 1,
                 "Up" => entity.Y > 1,
-                "Right" => entity.X + sourceImages[entity].Width < form.ClientSize.Width - 1,
-                "Down" => entity.Y + sourceImages[entity].Height < form.ClientSize.Height,
+                "Right" => entity.X + entity.Width < form.ClientSize.Width - 1,
+                "Down" => entity.Y + entity.Height < form.ClientSize.Height,
                 _ => true,
             };
         } 

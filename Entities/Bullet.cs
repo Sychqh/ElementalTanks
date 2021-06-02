@@ -15,13 +15,16 @@ namespace ElementalTanks
 
     public class Bullet : IEntity
     {
-        public ElementType Element { get; set; }
+        public IElement Element { get; set; }
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
         public ITank Sender;
 
-        public Bullet(ITank sender, ElementType element, int spriteNumber, Point location, string direction)
+        public Bullet(ITank sender, IElement element, int spriteNumber, Point location, string direction)
         {
             Sender = sender;
             Element = element;
