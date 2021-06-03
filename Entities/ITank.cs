@@ -17,6 +17,6 @@ namespace ElementalTanks
 
         public void Move(string direction);
         public void TakeDamage(Bullet bullet);
-        public void MoveBack();
+        public bool CanMove(IEntity[,] map);
     }
 }

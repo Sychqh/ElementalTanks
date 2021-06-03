@@ -38,14 +38,17 @@ namespace ElementalTanks
             Width = Height = 80;
             Element = element;
             Health = 100;
-            MoveSpeed = 10;
+            MoveSpeed = 5;
             Direction = "Up";
         }
 
-        public void Update()
+        public void Update(IEntity[,] map)
         {
-            X += RightMovement - LeftMovement;
-            Y += DownMovement - UpMovement;
+            if (CanMove(map))
+            {
+                X += RightMovement - LeftMovement;
+                Y += DownMovement - UpMovement;
+            }
         }
 
         public void Move(string direction)
@@ -73,12 +76,6 @@ namespace ElementalTanks
             }
         }
 
-        public void MoveBack()
-        {
-            X -= RightMovement - LeftMovement;
-            Y -= DownMovement - UpMovement;
-        }
-
         public Bullet Shoot()
         {
             return new Bullet(this);
@@ -88,6 +85,46 @@ namespace ElementalTanks
         {
             if (bullet.Sender is Enemy)
                 Health -= bullet.Element.GetFinalDamage(Element);
+        }
+
+        public bool CanMove1(IEntity[,] map)
+        {
+            return Direction switch
+            {
+                "Left" => X > 0 && map[X - MoveSpeed, Y + Height / 2] is null,
+                "Right" => X + Width + MoveSpeed < map.GetLength(0) && map[X + Width + MoveSpeed, Y + Height / 2] is null,
+                "Up" => Y > 0 && map[X + Width / 2, Y - MoveSpeed] is null,
+                "Down" => Y + Height + MoveSpeed < map.GetLength(1) && map[X + Width / 2, Y + Width + MoveSpeed] is null,
+                _ => false
+            };
+        }
+        public bool CanMove(IEntity[,] map)
+        {
+            switch (Direction)
+            {
+                case "Left" when X > 0:
+                    for (var y = Y; y < Y + Height; y++)
+                        if (!(map[X - MoveSpeed, y] is null))
+                            return false;
+                    return true;
+                case "Right" when X + Width + MoveSpeed < map.GetLength(0):
+                    for (var y = Y; y < Y + Height; y++)
+                        if (!(map[X + Width + MoveSpeed, y] is null))
+                            return false;
+                    return true;
+                case "Up" when Y > 0:
+                    for (var x = X; x < X + Width; x++)
+                        if (!(map[x, Y - MoveSpeed] is null))
+                            return false;
+                    return true;
+                case "Down" when Y + Height + MoveSpeed < map.GetLength(1):
+                    for (var x = X; x < X + Width; x++)
+                        if (!(map[x, Y + Width + MoveSpeed] is null))
+                            return false;
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

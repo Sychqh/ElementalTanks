@@ -46,11 +46,14 @@ namespace ElementalTanks
             Direction = "Up";
         }
 
-        public void Update()
+        public void Update(IEntity[,] map)
         {
             Move(Direction);
-            X += RightMovement - LeftMovement;
-            Y += DownMovement - UpMovement;
+            if (CanMove(map))
+            {
+                X += RightMovement - LeftMovement;
+                Y += DownMovement - UpMovement;
+            }
         }
 
         public void Move(string direction)
@@ -81,16 +84,39 @@ namespace ElementalTanks
             }
         }
 
-        public void MoveBack()
-        {
-            X -= RightMovement - LeftMovement;
-            Y -= DownMovement - UpMovement;
-        }
-
         public void TakeDamage(Bullet bullet)
         {
             if (bullet.Sender is Player)
                 Health -= bullet.Element.GetFinalDamage(Element);
+        }
+
+        public bool CanMove(IEntity[,] map)
+        {
+            switch (Direction)
+            {
+                case "Left" when X > 0:
+                    for (var y = Y; y < Y + Height; y++)
+                        if (!(map[X - MoveSpeed, y] is null))
+                            return false;
+                    return true;
+                case "Right" when X + Width + MoveSpeed < map.GetLength(0):
+                    for (var y = Y; y < Y + Height; y++)
+                        if (!(map[X + Width + MoveSpeed, y] is null))
+                            return false;
+                    return true;
+                case "Up" when Y > 0:
+                    for (var x = X; x < X + Width; x++)
+                        if (!(map[x, Y - MoveSpeed] is null))
+                            return false;
+                    return true;
+                case "Down" when Y + Height + MoveSpeed < map.GetLength(1):
+                    for (var x = X; x < X + Width; x++)
+                        if (!(map[x, Y + Width + MoveSpeed] is null))
+                            return false;
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

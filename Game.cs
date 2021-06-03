@@ -12,8 +12,10 @@ namespace ElementalTanks
         public readonly Player Player;
         public readonly List<IEntity> Entities;
         public readonly List<IEntity> Deleted;
+        public IEntity[,] Map;
+        public readonly int MapWidth;
+        public readonly int MapHeight;
 
-        private readonly Form form;
         private int score;
 
         public static readonly Dictionary<string, RotateFlipType> SpriteRotations = new Dictionary<string, RotateFlipType>
@@ -40,49 +42,33 @@ namespace ElementalTanks
             [new Point(1, 0)] = "Right"
         };
 
-        public Game(Form form)
+        public Game()
         {
-            this.form = form;
+            MapWidth = 800;
+            MapHeight = 600;
+            Map = new IEntity[MapWidth, MapHeight];
 
             Entities = new List<IEntity>
             {
                 new Player(300, 300, new Water()),
             };
             Player = Entities[0] as Player;
-            Entities.Add(new Enemy(100, 100, new Fire(), Player, 1));
-            Entities.Add(new Enemy(200, 100, new Water(), Player, 2));
-            Entities.Add(new Enemy(300, 100, new Earth(), Player, 1));
-            Entities.Add(new Enemy(400, 100, new Wind(), Player, 1));
-            Entities.Add(new Enemy(500, 100, new Lightning(), Player, 4));
-            Entities.Add(new Enemy(500, 200, new Cold(), Player, 2));
-            //Entities.Add(new Obstacle(100, 500, ElementType.Fire));
-            //Entities.Add(new Obstacle(200, 500, ElementType.Water));
-            //Entities.Add(new Obstacle(300, 500, ElementType.Earth));
-            //Entities.Add(new Obstacle(400, 500, ElementType.Wind));
-            //Entities.Add(new Obstacle(500, 500, ElementType.Lightning));
-            //Entities.Add(new Obstacle(100, 400, ElementType.Cold));
-
+            GenerateLevel();
             Deleted = new List<IEntity>();
 
         }
 
         public void Update()
         {
-            //foreach(var entity in Entities.Where(e => e is Enemy))
-            //{
-            //    var enemy = entity as Enemy;
-            //    enemy.Move(enemy.FindNextDirection());
-            //}
+            UpdateMap();
             foreach (var entity in Entities)
-                entity.Update();
+                entity.Update(Map);
 
             foreach (var entity in Entities)
             {
-                if (!IsEntityInBounds(form, entity))
+                if (!IsEntityInBounds(entity))
                     if (entity is Bullet)
                         Deleted.Add(entity);
-                    else if (entity is ITank) 
-                        (entity as ITank).MoveBack();
             }
 
             foreach (var bullet in Entities.Where(ent => ent is Bullet))
@@ -100,16 +86,6 @@ namespace ElementalTanks
                     Deleted.Add(tank);
 
             }
-            //foreach (var e1 in Entities)
-            //{
-            //    foreach (var e2 in Entities.Where(e => e != e1))
-            //    {
-            //        if (AreCollided(e1, e2))
-            //        {
-            //            Player.MoveBack();
-            //        }
-            //    }
-            //}
 
             if (Deleted != null)
             {
@@ -121,29 +97,73 @@ namespace ElementalTanks
 
         }
 
-        public bool AreCollided(IEntity first, IEntity second)
+        public void UpdateMap()
         {
-            return (first.X < second.X + second.Width) &&
-            (second.X < (first.X + first.Width)) &&
-            (first.Y < second.Y + second.Height) &&
-            (second.Y < first.Y + first.Height);
+            Map = new IEntity[MapWidth, MapHeight];
+            foreach (var entity in Entities.Where(ent => !(ent is Bullet)))
+            {
+                for (var i = entity.X; i < entity.X + entity.Width; i++)
+                    for (var j = entity.Y; j < entity.Y + entity.Height; j++)
+                        Map[i, j] = entity;
+            }
         }
 
-        public bool IsEntityInBounds(Form form, IEntity entity)
+        public bool AreCollided(IEntity first, IEntity second)
+        {
+            return (first.X < second.X + second.Width) 
+                && (second.X < first.X + first.Width) 
+                && (first.Y < second.Y + second.Height) 
+                && (second.Y < first.Y + first.Height);
+        }
+
+        public bool IsEntityInBounds(IEntity entity)
         {
             return entity.Direction switch
             {
-                "Left" => entity.X > 1,
-                "Up" => entity.Y > 1,
-                "Right" => entity.X + entity.Width < form.ClientSize.Width - 1,
-                "Down" => entity.Y + entity.Height < form.ClientSize.Height,
+                "Left" => entity.X > 0,
+                "Up" => entity.Y > 0,
+                "Right" => entity.X + entity.Width < MapWidth,
+                "Down" => entity.Y + entity.Height < MapHeight,
                 _ => true,
             };
-        } 
-        //private void Shoot()
-        //{
-        //    var bullet = new Bullet(player, player.Element, 1, player.GunPosition, player.Direction);
-        //    bullets.Add(bullet);
-        //}
+        }
+
+        public void GenerateLevel()
+        {
+            var rnd = new Random(2);
+            var enemyAmount = rnd.Next(1, 4);
+            
+            for (var i = 0; i < enemyAmount; i++)
+            {
+                Entities.Add(new Enemy(rnd.Next(MapWidth - 100), rnd.Next(MapHeight - 100), ChooseElement(rnd.Next(8)), Player, 1));
+            }
+
+            var obstacleAmount = rnd.Next(1, 8);
+            for (var i = 0; i < obstacleAmount; i++)
+            {
+                Entities.Add(new Obstacle(rnd.Next(MapWidth - 100), rnd.Next(MapHeight - 100), ChooseElement(rnd.Next(8))));
+            }
+        }
+
+        public void GenerateLevel1()
+        {
+            //Entities.Add(new Obstacle(0, 90, new Fire()));
+            Entities.Add(new Enemy(90, 90, new Fire(), Player, 1));
+        }
+
+        public IElement ChooseElement(int num)
+        {
+            return num switch
+            {
+                0 => new None(),
+                1 => new Fire(),
+                2 => new Water(),
+                3 => new Earth(),
+                4 => new Wind(),
+                5 => new Lightning(),
+                6 => new Cold(),
+                _ => new None(),
+            };
+        }
     }
 }

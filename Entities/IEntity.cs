@@ -12,6 +12,6 @@ namespace ElementalTanks
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public void Update();
+        public void Update(IEntity[,] map);
     }
 }

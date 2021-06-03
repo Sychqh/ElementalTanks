@@ -18,11 +18,10 @@ namespace ElementalTanks
 
         public Form1()
         {
+            game = new Game();
             DoubleBuffered = true;
             InitializeComponent();
             rnd = new Random();
-
-            game = new Game(this);
 
             gameTimer = new Timer
             {
@@ -38,7 +37,6 @@ namespace ElementalTanks
             {
                 foreach (var entity in game.Entities)
                 {
-                    //var sprite = (Image)sourceImages[entity].Clone();
                     var spriteName = entity.GetType().Name + entity.Element.GetType().Name;
                     var sprite = (Image)Properties.Resources.ResourceManager.GetObject(spriteName, Properties.Resources.Culture);
                     sprite.RotateFlip(Game.SpriteRotations[entity.Direction]);

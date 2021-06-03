@@ -17,12 +17,13 @@ namespace ElementalTanks
         {
             X = x;
             Y = y;
-            Width = Height = 73;
+            Direction = "Up";
+            Width = Height = 80;
             Element = element;
             Direction = "Up";
         }
 
-        public void Update()
+        public void Update(IEntity[,] map)
         {
             
         }

@@ -30,7 +30,7 @@ namespace ElementalTanks
             MoveSpeed = 10;
         }
 
-        public void Update()
+        public void Update(IEntity[,] map)
         {
             if (Sender.Element.Type == BulletType.Spray)
             {
@@ -43,11 +43,6 @@ namespace ElementalTanks
                 X += Game.MovementForDirection[Direction].X * MoveSpeed;
                 Y += Game.MovementForDirection[Direction].Y * MoveSpeed;
             }
-        }
-
-        public void Move(string direction)
-        {
-            
         }
     }
 }
