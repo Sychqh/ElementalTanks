@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
-
-namespace ElementalTanks
+﻿namespace ElementalTanks
 {
     public class Bullet : IEntity
     {
@@ -13,11 +6,11 @@ namespace ElementalTanks
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; }
+        public int Height { get; }
 
         public int MoveSpeed { get; set; }
-        public ITank Sender;
+        public ITank Sender { get; }
 
         public Bullet(ITank sender)
         {

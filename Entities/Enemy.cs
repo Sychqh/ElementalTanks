@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Drawing;
 
 namespace ElementalTanks
 {
     class Enemy : ITank
     {
-        public double Health { get; set; }
-        public int MoveSpeed { get; set; }
+        private readonly Player player;
+
         public IElement Element { get; set; }
+        public double Health { get; set; }
+        public int MoveSpeed { get; }
+
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public int Width { get; }
+        public int Height { get; }
 
         public int UpMovement { get; set; }
         public int DownMovement { get; set; }
         public int LeftMovement { get; set; }
         public int RightMovement { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
 
-        private readonly Player player;
+        public bool IsShooting { get; set; }
+        public int ShootingTime { get; private set; }
+
         public Point GunPosition => Direction switch
         {
             "Up" => new Point(X + 6, Y - Element.Height + 6),
@@ -53,6 +52,16 @@ namespace ElementalTanks
             {
                 X += RightMovement - LeftMovement;
                 Y += DownMovement - UpMovement;
+            }
+
+            if (IsShooting)
+                ShootingTime++;
+            
+            if (ShootingTime > 100 && Element.Type == BulletType.Spray
+                || ShootingTime > 1 && Element.Type == BulletType.Projectile)
+            {
+                ShootingTime = 0;
+                IsShooting = false;
             }
         }
 
@@ -118,5 +127,7 @@ namespace ElementalTanks
                     return false;
             }
         }
+
+        public Bullet Shoot() => new Bullet(this);
     }
 }

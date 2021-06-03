@@ -36,7 +36,7 @@ namespace ElementalTanks
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(game.MapWidth, game.MapHeight);
-            this.BackColor = System.Drawing.Color.Bisque;
+            this.BackColor = System.Drawing.Color.DarkGray;
             this.Name = "Form1";
             this.Text = "Elemental Tanks";
             this.ResumeLayout(false);

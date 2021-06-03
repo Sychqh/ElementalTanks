@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.Linq;
 using System.Drawing;
 
@@ -9,14 +7,16 @@ namespace ElementalTanks
 {
     public class Game
     {
+        private readonly Random rnd;
         public readonly Player Player;
         public readonly List<IEntity> Entities;
         public readonly List<IEntity> Deleted;
+        public readonly List<IEntity> Shooted;
         public IEntity[,] Map;
         public readonly int MapWidth;
         public readonly int MapHeight;
 
-        private int score;
+        public int Score { get; set; }
 
         public static readonly Dictionary<string, RotateFlipType> SpriteRotations = new Dictionary<string, RotateFlipType>
         {
@@ -47,15 +47,17 @@ namespace ElementalTanks
             MapWidth = 800;
             MapHeight = 600;
             Map = new IEntity[MapWidth, MapHeight];
+            rnd = new Random();
 
             Entities = new List<IEntity>
             {
-                new Player(300, 300, new Water()),
+                new Player(300, 300, ChooseElement(rnd.Next(7))),
             };
             Player = Entities[0] as Player;
             GenerateLevel();
-            Deleted = new List<IEntity>();
 
+            Shooted = new List<IEntity>();
+            Deleted = new List<IEntity>();
         }
 
         public void Update()
@@ -64,6 +66,9 @@ namespace ElementalTanks
             foreach (var entity in Entities)
                 entity.Update(Map);
 
+            var enemies = Entities.Where(ent => ent is Enemy).Select(ent => ent as Enemy).ToList();
+            var bullets = Entities.Where(ent => ent is Bullet).Select(ent => ent as Bullet);
+
             foreach (var entity in Entities)
             {
                 if (!IsEntityInBounds(entity))
@@ -71,20 +76,47 @@ namespace ElementalTanks
                         Deleted.Add(entity);
             }
 
-            foreach (var bullet in Entities.Where(ent => ent is Bullet))
+            foreach (var bullet in bullets)
             {
-                foreach (var tank in Entities.Where(ent => ent is ITank))
+                foreach (var entity in Entities.Where(ent => !(ent is Bullet)))
                 {
-                    if (AreCollided(bullet, tank))
-                        (tank as ITank).TakeDamage(bullet as Bullet);
+                    if (AreCollided(bullet, entity))
+                    {
+                        if (entity is ITank)
+                            (entity as ITank).TakeDamage(bullet);
+
+                        if (entity is Obstacle && bullet.Sender is Player)
+                        {
+                            Player.Element = entity.Element;
+                            Deleted.Add(entity);
+                        }
+
+                        if (bullet.Element.Type == BulletType.Projectile)
+                            Deleted.Add(bullet);
+                    }
                 }
+            }
+
+            foreach (var enemy in enemies)
+            {
+                if (rnd.Next(100) < 5 && !enemy.IsShooting)
+                {
+                    Shooted.Add(enemy.Shoot());
+                    enemy.IsShooting = true;
+                }
+                if (!enemy.IsShooting && enemy.Element.Type == BulletType.Spray)
+                    Deleted.Add(Entities.FirstOrDefault(ent => ent is Bullet && (ent as Bullet).Sender == enemy));
             }
 
             foreach (var tank in Entities.Where(ent => ent is ITank))
             {
                 if ((tank as ITank).Health < 0)
+                {
+                    if (tank is Enemy)
+                        Score += 1;
                     Deleted.Add(tank);
-
+                    Deleted.Add(Entities.FirstOrDefault(ent => ent is Bullet && (ent as Bullet).Sender == tank));
+                }
             }
 
             if (Deleted != null)
@@ -94,6 +126,17 @@ namespace ElementalTanks
               
                 Deleted.Clear();
             }
+
+            if (Shooted != null)
+            {
+                foreach (var bullet in Shooted)
+                    Entities.Add(bullet);
+
+                Shooted.Clear();
+            }
+
+            if (enemies.Count == 0)
+                GenerateLevel();
 
         }
 
@@ -130,25 +173,19 @@ namespace ElementalTanks
 
         public void GenerateLevel()
         {
-            var rnd = new Random(2);
+            var rnd = new Random();
             var enemyAmount = rnd.Next(1, 4);
             
             for (var i = 0; i < enemyAmount; i++)
             {
-                Entities.Add(new Enemy(rnd.Next(MapWidth - 100), rnd.Next(MapHeight - 100), ChooseElement(rnd.Next(8)), Player, 1));
+                Entities.Add(new Enemy(rnd.Next(MapWidth - 100), rnd.Next(MapHeight - 100), ChooseElement(rnd.Next(7)), Player, 1));
             }
 
             var obstacleAmount = rnd.Next(1, 8);
             for (var i = 0; i < obstacleAmount; i++)
             {
-                Entities.Add(new Obstacle(rnd.Next(MapWidth - 100), rnd.Next(MapHeight - 100), ChooseElement(rnd.Next(8))));
+                Entities.Add(new Obstacle(rnd.Next(MapWidth - 100), rnd.Next(MapHeight - 100), ChooseElement(rnd.Next(7))));
             }
-        }
-
-        public void GenerateLevel1()
-        {
-            //Entities.Add(new Obstacle(0, 90, new Fire()));
-            Entities.Add(new Enemy(90, 90, new Fire(), Player, 1));
         }
 
         public IElement ChooseElement(int num)

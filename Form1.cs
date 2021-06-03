@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ElementalTanks
@@ -13,15 +8,14 @@ namespace ElementalTanks
     public partial class Form1 : Form
     {
         private readonly Game game;
-        private readonly Random rnd;
         private readonly Timer gameTimer;
-
+        private Label score;
+        private ProgressBar playerHealth;
         public Form1()
         {
             game = new Game();
             DoubleBuffered = true;
             InitializeComponent();
-            rnd = new Random();
 
             gameTimer = new Timer
             {
@@ -43,11 +37,35 @@ namespace ElementalTanks
                     args.Graphics.DrawImage(sprite, entity.X, entity.Y, entity.Width, entity.Height);
                 }
             };
+
+            score = new Label
+            {
+                AutoSize = true,
+                Text = "Очки: " + game.Score,
+                ForeColor = Color.White,
+                Font = new Font("Arial", 14.25F, FontStyle.Bold),
+                Location = new Point(game.MapWidth / 2 - 100, 0)
+            };
+            playerHealth = new ProgressBar
+            {
+                Location = new Point(game.Player.X + game.Player.Width / 2, game.Player.X + game.Player.Width),
+                Value = (int)Math.Round(game.Player.Health),
+                Size = new Size(game.Player.Width, 10)
+            };
+            Controls.Add(score);
+            Controls.Add(playerHealth);
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
             game.Update();
+
+            score.Text = "Очки: " + game.Score;
+            playerHealth.Location = new Point(game.Player.X, game.Player.Y + game.Player.Height);
+            if (game.Player.Health > 0)
+                playerHealth.Value = (int)Math.Round(game.Player.Health);
+            else
+                playerHealth.Dispose();
             Invalidate();
         }
 
@@ -78,7 +96,7 @@ namespace ElementalTanks
                 case Keys.Space:
                     game.Player.IsShooting = false;
                     if (game.Player.Element.Type == BulletType.Spray)
-                        game.Deleted.Add(game.Entities.First(en => en is Bullet && (en as Bullet).Sender is Player));
+                        game.Deleted.Add(game.Entities.FirstOrDefault(en => en is Bullet && (en as Bullet).Sender is Player));
                     break;
             }
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Drawing;
 
 namespace ElementalTanks
 {
@@ -10,7 +6,7 @@ namespace ElementalTanks
     {
         public IElement Element { get; set; }
         public double Health { get; set; }
-        public int MoveSpeed { get; set; }
+        public int MoveSpeed { get; }
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -18,8 +14,8 @@ namespace ElementalTanks
         public int DownMovement { get; set; }
         public int LeftMovement { get; set; }
         public int RightMovement { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; }
+        public int Height { get; }
         public bool IsShooting { get; set; }
 
         public Point GunPosition => Direction switch
@@ -76,10 +72,7 @@ namespace ElementalTanks
             }
         }
 
-        public Bullet Shoot()
-        {
-            return new Bullet(this);
-        }
+        public Bullet Shoot() => new Bullet(this);
 
         public void TakeDamage(Bullet bullet)
         {
@@ -87,17 +80,6 @@ namespace ElementalTanks
                 Health -= bullet.Element.GetFinalDamage(Element);
         }
 
-        public bool CanMove1(IEntity[,] map)
-        {
-            return Direction switch
-            {
-                "Left" => X > 0 && map[X - MoveSpeed, Y + Height / 2] is null,
-                "Right" => X + Width + MoveSpeed < map.GetLength(0) && map[X + Width + MoveSpeed, Y + Height / 2] is null,
-                "Up" => Y > 0 && map[X + Width / 2, Y - MoveSpeed] is null,
-                "Down" => Y + Height + MoveSpeed < map.GetLength(1) && map[X + Width / 2, Y + Width + MoveSpeed] is null,
-                _ => false
-            };
-        }
         public bool CanMove(IEntity[,] map)
         {
             switch (Direction)

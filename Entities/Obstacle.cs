@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ElementalTanks
+﻿namespace ElementalTanks
 {
     public class Obstacle : IEntity
     {
@@ -10,8 +6,8 @@ namespace ElementalTanks
         public string Direction { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; }
+        public int Height { get; }
 
         public Obstacle(int x, int y, IElement element)
         {
@@ -23,9 +19,6 @@ namespace ElementalTanks
             Direction = "Up";
         }
 
-        public void Update(IEntity[,] map)
-        {
-            
-        }
+        public void Update(IEntity[,] map) { }
     }
 }
